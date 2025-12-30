@@ -151,6 +151,48 @@ ${activitiesStr}
     console.log('✅ Updated lifetime-data.js');
 }
 
+// Update landing page parameters
+function updateLandingPageParameters(data) {
+    const landingPath = path.join(__dirname, 'landing.html');
+    
+    if (!fs.existsSync(landingPath)) {
+        console.log('⚠️  Warning: landing.html not found, skipping parameter update');
+        return;
+    }
+    
+    // Filter for only the activities we want to display
+    const targetActivities = ['Economics', 'Animal Welfare', 'Mathematics'];
+    const filteredData = data.filter(item => targetActivities.includes(item.name));
+    
+    if (filteredData.length === 0) {
+        console.log('⚠️  Warning: No target activities found in data');
+        return;
+    }
+    
+    // Sort by lifetime hours descending
+    filteredData.sort((a, b) => b.lifetime - a.lifetime);
+    
+    // Create the parameters text
+    const parametersText = filteredData
+        .map(item => `${item.name}: ${formatHours(item.lifetime)} hrs`)
+        .join('<br>');
+    
+    // Read the current landing.html content
+    let content = fs.readFileSync(landingPath, 'utf-8');
+    
+    // Find and replace the parameters section
+    const parameterRegex = /(<h4>Parameters<\/h4>\s*<p>)(.*?)(<\/p>)/s;
+    const match = content.match(parameterRegex);
+    
+    if (match) {
+        const newContent = content.replace(parameterRegex, `$1${parametersText}$3`);
+        fs.writeFileSync(landingPath, newContent);
+        console.log('✅ Updated landing page parameters');
+    } else {
+        console.log('⚠️  Warning: Could not find parameters section in landing.html');
+    }
+}
+
 // Update this-week-data.js
 function updateThisWeekData(data) {
     const activities = data
@@ -225,6 +267,7 @@ function main() {
         
         updateLifetimeData(data);
         updateThisWeekData(data);
+        updateLandingPageParameters(data);
         
         console.log('\n✨ All files updated successfully!');
     } catch (error) {
