@@ -153,10 +153,10 @@ ${activitiesStr}
 
 // Update landing page parameters
 function updateLandingPageParameters(data) {
-    const landingPath = path.join(__dirname, 'landing.html');
+    const landingPath = path.join(__dirname, 'index.html');
     
     if (!fs.existsSync(landingPath)) {
-        console.log('⚠️  Warning: landing.html not found, skipping parameter update');
+        console.log('⚠️  Warning: index.html not found, skipping parameter update');
         return;
     }
     
@@ -177,7 +177,7 @@ function updateLandingPageParameters(data) {
         .map(item => `${item.name}: ${formatHours(item.lifetime)} hrs`)
         .join('<br>');
     
-    // Read the current landing.html content
+    // Read the current index.html content
     let content = fs.readFileSync(landingPath, 'utf-8');
     
     // Find and replace the parameters section
@@ -189,7 +189,7 @@ function updateLandingPageParameters(data) {
         fs.writeFileSync(landingPath, newContent);
         console.log('✅ Updated landing page parameters');
     } else {
-        console.log('⚠️  Warning: Could not find parameters section in landing.html');
+        console.log('⚠️  Warning: Could not find parameters section in index.html');
     }
 }
 
