@@ -168,16 +168,16 @@ a:hover {
 
 /* Special styling for dashboard link */
 .dashboard-link {
-    background: var(--burgundy) !important;
+    background: var(--oxford-blue) !important;
     color: var(--text-light) !important;
-    border-color: var(--burgundy) !important;
+    border-color: var(--oxford-blue) !important;
     font-weight: 600 !important;
 }
 
 .dashboard-link:hover {
-    background: var(--oxford-blue) !important;
+    background: var(--midnight-navy) !important;
     color: var(--text-light) !important;
-    border-color: var(--oxford-blue) !important;
+    border-color: var(--midnight-navy) !important;
     transform: translateY(-2px);
     box-shadow: var(--shadow-medium) !important;
 }
@@ -224,15 +224,15 @@ section {
 }
 
 .dashboard-inline-link {
-    color: var(--burgundy);
+    color: var(--oxford-blue);
     font-weight: 600;
-    border-bottom: 2px solid var(--burgundy);
+    border-bottom: 2px solid var(--oxford-blue);
     padding-bottom: 1px;
 }
 
 .dashboard-inline-link:hover {
-    color: var(--oxford-blue);
-    border-bottom-color: var(--oxford-blue);
+    color: var(--midnight-navy);
+    border-bottom-color: var(--midnight-navy);
 }
 
 /* Focus Grid */

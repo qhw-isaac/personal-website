@@ -490,10 +490,12 @@ function setupTabSwitching() {
     const codeEditors = document.querySelectorAll('.code-editor');
     const gameContainer = document.getElementById('game-container');
     const cowGalleryContainer = document.getElementById('cow-gallery-container');
+    const pixelPastureContainer = document.getElementById('pixel-pasture-container');
     
     // Set initial visibility
     if (cowGalleryContainer) cowGalleryContainer.style.display = 'flex';
     if (gameContainer) gameContainer.style.display = 'none';
+    if (pixelPastureContainer) pixelPastureContainer.style.display = 'none';
     codeEditors.forEach(editor => editor.style.display = 'none');
     
     tabs.forEach(tab => {
@@ -510,12 +512,22 @@ function setupTabSwitching() {
             // Show appropriate content
             if (tabId === 'cow-gallery') {
                 showElement(cowGalleryContainer);
-                hideElements([gameContainer, ...codeEditors]);
+                hideElements([gameContainer, pixelPastureContainer, ...codeEditors]);
             } else if (tabId === 'feed-a-cow') {
                 showElement(gameContainer);
-                hideElements([cowGalleryContainer, ...codeEditors]);
+                hideElements([cowGalleryContainer, pixelPastureContainer, ...codeEditors]);
+            } else if (tabId === 'pixel-pasture') {
+                showElement(pixelPastureContainer);
+                hideElements([cowGalleryContainer, gameContainer, ...codeEditors]);
+                // Initialize pixel pasture on first click
+                if (!window.pixelPastureInitialized) {
+                    window.pixelPastureInitialized = true;
+                    initPixelPasture();
+                } else if (window.pixelPasture) {
+                    window.pixelPasture.start();
+                }
             } else {
-                hideElements([gameContainer, cowGalleryContainer, ...codeEditors]);
+                hideElements([gameContainer, cowGalleryContainer, pixelPastureContainer, ...codeEditors]);
                 const selectedEditor = document.getElementById(tabId);
                 if (selectedEditor) showElement(selectedEditor);
             }
@@ -1404,4 +1416,456 @@ function setupPlotsTabSwitching() {
             }
         });
     });
+}
+
+// ================================================
+// 🎨 PIXEL PASTURE ANIMATION
+// ================================================
+// Moving pixel art cows on pasture with day/night cycle
+// ================================================
+
+function initPixelPasture() {
+    const canvas = document.getElementById('pixel-canvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false; // Keep pixels crisp
+    
+    // Canvas configuration for image rendering
+    const CANVAS_WIDTH = canvas.width;
+    const CANVAS_HEIGHT = canvas.height;
+    
+    // Set up crisp image rendering
+    ctx.imageSmoothingEnabled = false;
+    
+    // Game state
+    const state = {
+        cows: [],
+        grass: [],
+        stars: [],
+        time: 0,
+        dayNightCycle: 0,
+        isDay: true,
+        animationRunning: true,
+        grassGrowthActive: true,
+        currentHour: new Date().getHours()
+    };
+    
+    // Cow image setup
+    const cowImage = new Image();
+    cowImage.src = 'content/main-tabs/cow.png';
+    let cowImageLoaded = false;
+    
+    cowImage.onload = function() {
+        cowImageLoaded = true;
+        console.log('🐄 Cow image loaded successfully!');
+    };
+    
+    cowImage.onerror = function() {
+        console.error('❌ Failed to load cow image');
+    };
+    
+    // Cow dimensions (much bigger for better visibility)
+    const cowSprites = {
+        width: 80, // Much larger cow
+        height: 64
+    };
+    
+    // Grass colors for different growth stages
+    const grassColors = ['#228B22', '#32CD32', '#90EE90', '#ADFF2F'];
+    
+    // Initialize grass
+    function initGrass() {
+        state.grass = [];
+        const grassY = Math.floor(CANVAS_HEIGHT * 0.75);
+        for (let x = 0; x < CANVAS_WIDTH; x += 12) {
+            if (Math.random() > 0.2) {
+                state.grass.push({
+                    x: x,
+                    y: grassY + Math.random() * 15, // Slight variation in grass height
+                    growth: Math.floor(Math.random() * 4),
+                    growthTimer: Math.random() * 200
+                });
+            }
+        }
+    }
+    
+    // Cow class
+    class PixelCow {
+        constructor() {
+            this.x = Math.random() * (CANVAS_WIDTH - cowSprites.width - 40) + 20;
+            this.baseY = CANVAS_HEIGHT * 0.75 - cowSprites.height; // Ground level (adjusted for taller canvas)
+            this.y = this.baseY;
+            
+            // Initialize based on current day/night
+            const isDay = state.isDay;
+            if (isDay) {
+                // Day: more active initial state
+                this.vx = (Math.random() > 0.5 ? 1 : -1) * (0.8 + Math.random() * 1.2);
+                this.isGrazing = Math.random() > 0.6; // 40% chance to start grazing
+                this.jumpTimer = Math.random() * 300 + 120; // 2-7 seconds
+            } else {
+                // Night: calmer initial state
+                this.vx = (Math.random() > 0.5 ? 1 : -1) * (0.2 + Math.random() * 0.4);
+                this.isGrazing = Math.random() > 0.3; // 70% chance to start grazing
+                this.jumpTimer = Math.random() * 800 + 600; // 10-25 seconds
+            }
+            
+            this.vy = 0; // Vertical velocity for jumping
+            this.animFrame = 0;
+            this.animTimer = 0;
+            this.direction = this.vx > 0 ? 1 : -1;
+            this.grazeTimer = Math.random() * 200;
+            this.isJumping = false;
+            this.gravity = 0.4; // Gentler gravity
+        }
+        
+        update() {
+            // Day/night activity levels
+            const isDay = state.isDay;
+            const activityMultiplier = isDay ? 1.5 : 0.5; // More active during day
+            
+            this.animTimer++;
+            const animSpeed = isDay ? 25 : 50; // Faster animation during day
+            if (this.animTimer > animSpeed) {
+                this.animFrame = (this.animFrame + 1) % 2;
+                this.animTimer = 0;
+            }
+            
+            // Grazing behavior - varies by time of day
+            this.grazeTimer--;
+            if (this.grazeTimer <= 0) {
+                this.isGrazing = !this.isGrazing;
+                if (isDay) {
+                    // Day: shorter grazing, more walking
+                    this.grazeTimer = this.isGrazing ? 200 + Math.random() * 300 : 80 + Math.random() * 120;
+                } else {
+                    // Night: longer grazing, less walking
+                    this.grazeTimer = this.isGrazing ? 500 + Math.random() * 700 : 60 + Math.random() * 100;
+                }
+            }
+            
+            // Jump timer - much more active during day
+            this.jumpTimer--;
+            if (this.jumpTimer <= 0 && !this.isJumping && !this.isGrazing && Math.abs(this.y - this.baseY) < 2) {
+                this.isJumping = true;
+                if (isDay) {
+                    // Day: higher, more frequent jumps
+                    this.vy = -7 - Math.random() * 5;
+                    this.jumpTimer = 120 + Math.random() * 300; // 2-7 seconds
+                } else {
+                    // Night: gentler, rare jumps
+                    this.vy = -4 - Math.random() * 2;
+                    this.jumpTimer = 600 + Math.random() * 1200; // 10-30 seconds
+                }
+            }
+            
+            if (!this.isGrazing) {
+                // Adjust movement speed based on day/night
+                const speedMultiplier = isDay ? 1.8 : 0.6;
+                this.x += this.vx * speedMultiplier;
+                
+                // Physics: always apply gravity and movement when not on ground
+                if (this.y < this.baseY - 1 || this.isJumping) {
+                    this.y += this.vy;
+                    this.vy += this.gravity; // Apply gravity
+                }
+                
+                // Smooth landing when close to ground
+                if (this.y >= this.baseY - 1) {
+                    // If moving downward and close to ground, land smoothly
+                    if (this.vy >= 0) {
+                        this.y = this.baseY;
+                        this.vy = 0;
+                        this.isJumping = false;
+                    }
+                }
+                
+                // Boundary checking (horizontal only)
+                if (this.x < 20 || this.x > CANVAS_WIDTH - cowSprites.width - 20) {
+                    this.vx = -this.vx;
+                    this.direction = -this.direction;
+                }
+                
+                // Random direction changes - more frequent during day
+                const directionChangeChance = isDay ? 0.008 : 0.001;
+                if (Math.random() < directionChangeChance) {
+                    if (isDay) {
+                        // Day: more varied speeds
+                        this.vx = (Math.random() > 0.5 ? 1 : -1) * (0.8 + Math.random() * 1.2);
+                    } else {
+                        // Night: slower, gentler movement
+                        this.vx = (Math.random() > 0.5 ? 1 : -1) * (0.2 + Math.random() * 0.4);
+                    }
+                    this.direction = this.vx > 0 ? 1 : -1;
+                }
+            } else {
+                // When grazing, gradually settle to ground if not already there
+                if (this.y > this.baseY) {
+                    this.y = Math.max(this.baseY, this.y - 2); // Gradual descent
+                } else {
+                    this.y = this.baseY;
+                }
+                this.vy = 0;
+                this.isJumping = false;
+            }
+        }
+        
+        draw(ctx) {
+            if (!cowImageLoaded) return;
+            
+            const width = cowSprites.width;
+            const height = cowSprites.height;
+            
+            ctx.save();
+            
+            // Default cow faces left, so flip when moving right
+            if (this.direction > 0) {
+                // Flip horizontally for right movement
+                ctx.scale(-1, 1);
+                ctx.drawImage(cowImage, -(this.x + width), this.y, width, height);
+            } else {
+                // Normal orientation for left movement (default)
+                ctx.drawImage(cowImage, this.x, this.y, width, height);
+            }
+            
+            ctx.restore();
+            
+            // Add jumping shadow effect
+            if (this.y < this.baseY) {
+                // Draw shadow on ground when jumping
+                const shadowOpacity = Math.max(0.1, 0.4 - (this.baseY - this.y) / 50);
+                ctx.fillStyle = `rgba(0, 0, 0, ${shadowOpacity})`;
+                ctx.fillRect(this.x + 10, this.baseY + height - 5, width - 20, 8);
+            }
+            
+            // Add simple walking animation
+            if (this.animFrame === 1 && !this.isGrazing && this.y >= this.baseY) {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.fillRect(this.x + Math.floor(width/2) - 4, this.y - 2, 8, 2);
+            }
+        }
+    }
+    
+    // Add initial cows
+    function addCow() {
+        if (state.cows.length < 7) {
+            state.cows.push(new PixelCow());
+            updateStats();
+        } else {
+            // Show stocking density notification
+            showNotification('Stocking density reached!');
+        }
+    }
+    
+    // Clear all cows
+    function clearPasture() {
+        state.cows = [];
+        updateStats();
+    }
+    
+    // Update grass growth
+    function updateGrass() {
+        if (!state.grassGrowthActive) return;
+        
+        state.grass.forEach(grass => {
+            grass.growthTimer--;
+            if (grass.growthTimer <= 0) {
+                grass.growth = Math.min(grass.growth + 1, 3);
+                grass.growthTimer = 300 + Math.random() * 200;
+            }
+        });
+    }
+    
+    // Draw grass
+    function drawGrass(ctx) {
+        state.grass.forEach(grass => {
+            ctx.fillStyle = grassColors[grass.growth];
+            // Draw grass blades
+            ctx.fillRect(grass.x, grass.y, 3, 8);
+            ctx.fillRect(grass.x + 4, grass.y, 3, 6);
+            if (grass.growth > 1) {
+                ctx.fillRect(grass.x + 2, grass.y - 4, 2, 8);
+            }
+            if (grass.growth > 2) {
+                ctx.fillRect(grass.x + 1, grass.y - 8, 4, 6);
+            }
+        });
+    }
+    
+    // Initialize stars for nighttime
+    function initStars() {
+        state.stars = [];
+        for (let i = 0; i < 50; i++) {
+            state.stars.push({
+                x: Math.random() * CANVAS_WIDTH,
+                y: Math.random() * (CANVAS_HEIGHT * 0.6), // Stars only in sky area
+                brightness: Math.random() * 0.8 + 0.2,
+                twinkleSpeed: Math.random() * 0.02 + 0.01
+            });
+        }
+    }
+    
+    // Draw sky with PST-based day/night cycle
+    function drawSky(ctx) {
+        // Get current PST time
+        const now = new Date();
+        const pstTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+        const hour = pstTime.getHours();
+        
+        // Determine if it's day or night (6 AM to 8 PM is day)
+        const isCurrentlyDay = hour >= 6 && hour < 20;
+        state.isDay = isCurrentlyDay;
+        
+        // Simple, clean colors
+        let skyColor, groundColor;
+        if (hour >= 7 && hour < 18) {
+            skyColor = '#87CEEB'; // Simple day sky
+            groundColor = '#90EE90'; // Light green ground
+        } else if (hour >= 5 && hour < 7) {
+            skyColor = '#FFB347'; // Dawn
+            groundColor = '#98FB98'; // Slightly different green
+        } else if (hour >= 18 && hour < 21) {
+            skyColor = '#FF6347'; // Dusk
+            groundColor = '#90EE90'; // Keep ground consistent
+        } else {
+            skyColor = '#191970'; // Night sky
+            groundColor = '#228B22'; // Darker ground at night
+        }
+        
+        // Draw simple sky (top 75% of canvas for taller area)
+        ctx.fillStyle = skyColor;
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT * 0.75);
+        
+        // Draw simple ground (bottom 25% of canvas)
+        ctx.fillStyle = groundColor;
+        ctx.fillRect(0, CANVAS_HEIGHT * 0.75, CANVAS_WIDTH, CANVAS_HEIGHT * 0.25);
+        
+        // Draw stars at night
+        if (!state.isDay) {
+            drawStars(ctx);
+        }
+    }
+    
+    // Draw twinkling stars
+    function drawStars(ctx) {
+        state.stars.forEach(star => {
+            // Twinkling effect
+            star.brightness += (Math.random() - 0.5) * star.twinkleSpeed;
+            star.brightness = Math.max(0.1, Math.min(1, star.brightness));
+            
+            ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+            ctx.fillRect(Math.floor(star.x), Math.floor(star.y), 2, 2);
+            
+            // Occasionally add a cross pattern for brighter stars
+            if (star.brightness > 0.7) {
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness * 0.5})`;
+                ctx.fillRect(Math.floor(star.x) - 2, Math.floor(star.y), 2, 2);
+                ctx.fillRect(Math.floor(star.x) + 2, Math.floor(star.y), 2, 2);
+                ctx.fillRect(Math.floor(star.x), Math.floor(star.y) - 2, 2, 2);
+                ctx.fillRect(Math.floor(star.x), Math.floor(star.y) + 2, 2, 2);
+            }
+        });
+    }
+    
+    // Update day/night cycle (now just updates display, actual time is real PST)
+    function updateDayNight() {
+        // Update stats display every few seconds
+        state.dayNightCycle++;
+        if (state.dayNightCycle > 180) { // Update every 3 seconds
+            state.dayNightCycle = 0;
+            updateStats();
+        }
+    }
+    
+    // Update statistics display
+    function updateStats() {
+        const cowCountEl = document.getElementById('cow-count');
+        const timeCycleEl = document.getElementById('time-cycle');
+        
+        if (cowCountEl) cowCountEl.textContent = state.cows.length;
+        
+        if (timeCycleEl) {
+            const now = new Date();
+            const pstTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+            const timeString = pstTime.toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            timeCycleEl.textContent = timeString;
+        }
+    }
+    
+    // Main animation loop
+    function animate() {
+        if (!state.animationRunning) return;
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        
+        // Draw sky
+        drawSky(ctx);
+        
+        // Draw grass
+        drawGrass(ctx);
+        
+        // Update and draw cows
+        state.cows.forEach((cow, index) => {
+            cow.update();
+            cow.draw(ctx);
+        });
+        
+        // Update systems
+        updateGrass();
+        updateDayNight();
+        
+        state.time++;
+        requestAnimationFrame(animate);
+    }
+    
+    // Event listeners
+    const addCowBtn = document.getElementById('add-cow-btn');
+    const clearPastureBtn = document.getElementById('clear-pasture-btn');
+    const toggleAnimationBtn = document.getElementById('toggle-animation-btn');
+    
+    if (addCowBtn) {
+        addCowBtn.addEventListener('click', addCow);
+    }
+    
+    if (clearPastureBtn) {
+        clearPastureBtn.addEventListener('click', clearPasture);
+    }
+    
+    if (toggleAnimationBtn) {
+        toggleAnimationBtn.addEventListener('click', () => {
+            state.animationRunning = !state.animationRunning;
+            toggleAnimationBtn.textContent = state.animationRunning ? 'Pause Animation' : 'Resume Animation';
+            if (state.animationRunning) {
+                animate();
+            }
+        });
+    }
+    
+    // Initialize
+    initGrass();
+    initStars();
+    addCow(); // Start with one cow
+    updateStats();
+    
+    // Store reference globally for tab switching
+    window.pixelPasture = {
+        start: () => {
+            if (!state.animationRunning) {
+                state.animationRunning = true;
+                animate();
+            }
+        },
+        stop: () => {
+            state.animationRunning = false;
+        }
+    };
+    
+    // Start animation
+    animate();
 }

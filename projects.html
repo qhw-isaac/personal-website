@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Isaac Qi</title>
+    <link rel="stylesheet" href="journal-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="header-content">
+                <h1 class="site-title">Projects</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="content/CV/Redacted_CV.pdf" target="_blank">CV</a></li>
+                    <li><a href="journal.html">Journal</a></li>
+                    <li><a href="#" class="active">Projects</a></li>
+                    <li><a href="dashboard.html" class="dashboard-link">Research Dashboard</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- Project Category Toggle -->
+            <div class="project-toggle" style="text-align: center; margin-bottom: 2rem;">
+                <button class="toggle-btn active" id="academic-btn" onclick="showProjects('academic')"
+                        style="background: #722f37; color: white; border: none; padding: 1rem 2rem; 
+                               margin: 0 0.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;
+                               font-family: 'EB Garamond', 'Crimson Text', Georgia, serif; font-size: 1.1rem;">
+                    Academic Projects
+                </button>
+                <button class="toggle-btn" id="leadership-btn" onclick="showProjects('leadership')" 
+                        style="background: #f4f1e8; color: #4a4a4a; border: 1px solid #d4c4a0; 
+                               padding: 1rem 2rem; margin: 0 0.5rem; border-radius: 8px; 
+                               cursor: pointer; font-weight: 600;
+                               font-family: 'EB Garamond', 'Crimson Text', Georgia, serif; font-size: 1.1rem;">
+                    Leadership & Service
+                </button>
+                <button class="toggle-btn" id="passion-btn" onclick="showProjects('passion')" 
+                        style="background: #f4f1e8; color: #4a4a4a; border: 1px solid #d4c4a0; 
+                               padding: 1rem 2rem; margin: 0 0.5rem; border-radius: 8px; 
+                               cursor: pointer; font-weight: 600;
+                               font-family: 'EB Garamond', 'Crimson Text', Georgia, serif; font-size: 1.1rem;">
+                    Passion Projects
+                </button>
+            </div>
+
+            <!-- Academic Projects Section --> 
+            <section class="recent-updates" id="academic-projects">
+                <h3>Research & Coursework</h3>
+                <p style="color: #6d6d6d; font-style: italic; margin-bottom: 2rem; text-align: center; font-size: 1rem;">
+                    Selected academic work spanning animal welfare and economics.
+                </p>
+
+                <div class="update-entry">
+                    <div class="update-content" style="background: #f9f7f4; border: 1px solid #e8e0d0; border-radius: 8px; 
+                                                     padding: 24px; margin-left: 20px; position: relative; 
+                                                     box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                        <!-- Tape on all four corners -->
+                        <div style="position: absolute; top: -8px; left: -8px; z-index: 10; transform: rotate(-14deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -8px; z-index: 10; transform: rotate(16deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; left: -8px; z-index: 10; transform: rotate(9deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; right: -8px; z-index: 10; transform: rotate(-11deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <h4 style="margin-bottom: 4px;">Gravity Model Analysis</h4>
+                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px; 
+                                   font-style: italic;">FRE 502 - Fall 2025</div>
+                        <p>Econometric analysis of international trade flows using gravity model methodology. Examined the relationship between trade volumes, economic size, and geographic distance across multiple countries.</p>
+                        <div style="margin: 15px 0; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="content/materials/gravity model/Isaac_Qi_Gravity_Model.pdf" target="_blank" 
+                               style="display: inline-block; background: #722f37; color: white; padding: 0.5rem 1rem; 
+                                      text-decoration: none; border-radius: 4px; font-size: 0.9rem;">
+                                📄 View Report
+                            </a>
+                            <a href="https://github.com/qhw-isaac/gravity_model" target="_blank" 
+                               style="display: inline-block; background: #2c2c2c; color: white; padding: 0.5rem 1rem; 
+                                      text-decoration: none; border-radius: 4px; font-size: 0.9rem;">
+                                💻 View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Leadership & Service Section -->
+            <section class="recent-updates" id="leadership-projects" style="display: none;">
+                <h3>Leadership & Service</h3>
+                <p style="color: #6d6d6d; font-style: italic; margin-bottom: 2rem; text-align: center; font-size: 1rem;">
+                    Leadership roles and community service experiences.
+                </p>
+
+                <div class="update-entry">
+                    <div class="update-content" style="background: #f9f7f4; border: 1px solid #e8e0d0; border-radius: 8px; 
+                                                     padding: 24px; margin-left: 20px; position: relative; 
+                                                     box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                        <!-- Tape on all four corners -->
+                        <div style="position: absolute; top: -8px; left: -8px; z-index: 10; transform: rotate(-10deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -8px; z-index: 10; transform: rotate(14deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; left: -8px; z-index: 10; transform: rotate(7deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; right: -8px; z-index: 10; transform: rotate(-13deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <h4 style="margin-bottom: 4px;">Leadership Experience</h4>
+                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px; 
+                                   font-style: italic;">Coming Soon</div>
+                        <p>Leadership roles and community service experiences will be featured here as they develop during my academic journey.</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Passion Projects Section -->
+            <section class="recent-updates" id="passion-projects" style="display: none;">
+                <h3>Work Beyond Academia</h3>
+                <p style="color: #6d6d6d; font-style: italic; margin-bottom: 2rem; text-align: center; font-size: 1rem;">
+                    A collection of formative work and experiences.
+                </p>
+
+                <div class="update-entry">
+                    <div class="update-content" style="background: #f9f7f4; border: 1px solid #e8e0d0; border-radius: 8px; 
+                                                     padding: 24px; margin-left: 20px; position: relative; 
+                                                     box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                        <!-- Tape on all four corners -->
+                        <div style="position: absolute; top: -8px; left: -8px; z-index: 10; transform: rotate(-12deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -8px; z-index: 10; transform: rotate(15deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; left: -8px; z-index: 10; transform: rotate(8deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; right: -8px; z-index: 10; transform: rotate(-10deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <h4 style="margin-bottom: 4px;">Black Desert Online Cinematic</h4>
+                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px; 
+                                   font-style: italic;">September 2018</div>
+                        <p>Produced a cinematic video in Adobe Premiere Pro.</p>
+                        <div class="video-container" style="position: relative; display: inline-block;">
+                            <a href="https://www.youtube.com/watch?v=oiErrmTRR3I" target="_blank" style="text-decoration: none;">
+                                <img src="https://img.youtube.com/vi/oiErrmTRR3I/maxresdefault.jpg" 
+                                     alt="Black Desert Online Cinematic" 
+                                     style="width: 560px; height: 315px; object-fit: cover; border-radius: 8px;">
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                                           background: rgba(0,0,0,0.8); border-radius: 50%; width: 68px; height: 48px; 
+                                           display: flex; align-items: center; justify-content: center;">
+                                    <div style="width: 0; height: 0; border-left: 20px solid white; 
+                                               border-top: 12px solid transparent; border-bottom: 12px solid transparent; 
+                                               margin-left: 4px;"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="update-entry">
+                    <div class="update-content" style="background: #f9f7f4; border: 1px solid #e8e0d0; border-radius: 8px; 
+                                                     padding: 24px; margin-left: 20px; position: relative; 
+                                                     box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                        <!-- Tape on all four corners -->
+                        <div style="position: absolute; top: -8px; left: -8px; z-index: 10; transform: rotate(-18deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -8px; z-index: 10; transform: rotate(11deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; left: -8px; z-index: 10; transform: rotate(14deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; right: -8px; z-index: 10; transform: rotate(-7deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <h4 style="margin-bottom: 4px;">Dog Grooming</h4>
+                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px; 
+                                   font-style: italic;">October 2018 - December 2021</div>
+                        <p>Three year journey from learning how to bathe dogs to managing a corporate dog grooming salon.</p>
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin: 20px 0;">
+                                <img src="journal-content/images/morgan.jpeg" alt="Morgan" style="width: 250px; height: 250px; object-fit: cover; border-radius: 8px;" />
+                                <img src="journal-content/images/rory.jpeg" alt="Rory" style="width: 250px; height: 250px; object-fit: cover; border-radius: 8px;" />
+                                <img src="journal-content/images/zorba.jpeg" alt="Zorba" style="width: 250px; height: 250px; object-fit: cover; object-position: center 30%; border-radius: 8px;" />                
+                            </div>
+                    </div>
+                </div>
+
+                <div class="update-entry">
+                    <div class="update-content" style="background: #f9f7f4; border: 1px solid #e8e0d0; border-radius: 8px; 
+                                                     padding: 24px; margin-left: 20px; position: relative; 
+                                                     box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                        <!-- Tape on all four corners -->
+                        <div style="position: absolute; top: -8px; left: -8px; z-index: 10; transform: rotate(-9deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -8px; z-index: 10; transform: rotate(13deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; left: -8px; z-index: 10; transform: rotate(6deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; right: -8px; z-index: 10; transform: rotate(-16deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9); 
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <h4 style="margin-bottom: 4px;">First Apartment</h4>
+                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px; 
+                                   font-style: italic;">February 2019 - December 2022</div>
+                        <p>Moved into my first apartment in downtown Vancouver. Many memories made here; particularly decorating it and making it my own.</p>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin: 20px 0;">
+                            <img src="journal-content/images/first apartment/living room.jpg" alt="Living Room" style="width: 300px; height: 200px; object-fit: cover; border-radius: 8px;" />
+                            <img src="journal-content/images/first apartment/reading nook.jpg" alt="Reading Nook" style="width: 300px; height: 200px; object-fit: cover; border-radius: 8px;" />
+                            <img src="journal-content/images/first apartment/desk.png" alt="Desk Setup" style="width: 300px; height: 200px; object-fit: cover; border-radius: 8px;" />
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 Isaac Qi. A personal archive.</p>
+            <p class="motto">Per aspera tuum est</p>
+        </footer>
+    </div>
+
+    <script src="journal-script.js"></script>
+    <script>
+        function showProjects(type) {
+            // Get sections
+            const passionSection = document.getElementById('passion-projects');
+            const academicSection = document.getElementById('academic-projects');
+            const leadershipSection = document.getElementById('leadership-projects');
+            
+            // Get buttons
+            const passionBtn = document.getElementById('passion-btn');
+            const academicBtn = document.getElementById('academic-btn');
+            const leadershipBtn = document.getElementById('leadership-btn');
+            
+            // Hide all sections first
+            passionSection.style.display = 'none';
+            academicSection.style.display = 'none';
+            leadershipSection.style.display = 'none';
+            
+            // Reset all buttons to inactive state
+            const inactiveStyle = {
+                background: '#f4f1e8',
+                color: '#4a4a4a',
+                border: '1px solid #d4c4a0',
+                fontFamily: "'EB Garamond', 'Crimson Text', Georgia, serif",
+                fontWeight: '600',
+                fontSize: '1.1rem'
+            };
+            
+            const activeStyle = {
+                background: '#722f37',
+                color: 'white',
+                border: 'none',
+                fontFamily: "'EB Garamond', 'Crimson Text', Georgia, serif",
+                fontWeight: '600',
+                fontSize: '1.1rem'
+            };
+            
+            // Apply inactive style to all buttons
+            Object.assign(academicBtn.style, inactiveStyle);
+            Object.assign(leadershipBtn.style, inactiveStyle);
+            Object.assign(passionBtn.style, inactiveStyle);
+            
+            if (type === 'academic') {
+                academicSection.style.display = 'block';
+                Object.assign(academicBtn.style, activeStyle);
+            } else if (type === 'leadership') {
+                leadershipSection.style.display = 'block';
+                Object.assign(leadershipBtn.style, activeStyle);
+            } else if (type === 'passion') {
+                passionSection.style.display = 'block';
+                Object.assign(passionBtn.style, activeStyle);
+            }
+        }
+    </script>
+</body>
+</html>

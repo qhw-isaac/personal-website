@@ -32,6 +32,15 @@
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="journal.html">Journal</a>
+                </li>
+                <li class="nav-item">
+                    <a href="projects.html">Projects</a>
+                </li>
+                <li class="nav-item">
                     <a>Research Dashboard</a>
                 </li>
             </ul>
@@ -80,6 +89,11 @@
                         <div class="tab active" data-tab="cow-gallery">
                             <i class="fas fa-images"></i>
                             <span>Cows I've Met</span>
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="tab" data-tab="pixel-pasture">
+                            <i class="fas fa-th"></i>
+                            <span>Pixel Pasture</span>
                             <i class="fas fa-times"></i>
                         </div>
                         <div class="tab" data-tab="feed-a-cow">
@@ -184,6 +198,30 @@
                         <div class="game-instructions">
                             <p>🐄 Feed the cows as they appear! Each cow is worth 10 points.</p>
                             <p>⏰ You have 30 seconds to feed as many cows as possible!</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Pixel Pasture -->
+                    <div class="pixel-pasture-container" id="pixel-pasture-container" style="display: none;">
+                        <div class="pixel-canvas-container">
+                            <canvas id="pixel-canvas" width="600" height="500"></canvas>
+                        </div>
+                        <div class="pasture-stats">
+                            <div class="pasture-controls">
+                                <button class="pasture-btn" id="add-cow-btn">Add Cow</button>
+                                <button class="pasture-btn" id="clear-pasture-btn">Clear Pasture</button>
+                                <button class="pasture-btn" id="toggle-animation-btn">Pause Animation</button>
+                            </div>
+                            <div class="stat-items">
+                                <div class="stat-item">
+                                    <span class="stat-label">Cows:</span>
+                                    <span class="stat-value" id="cow-count">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Local Time (PST):</span>
+                                    <span class="stat-value" id="time-cycle">12:00 PM</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

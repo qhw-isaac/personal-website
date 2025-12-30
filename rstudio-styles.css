@@ -277,7 +277,7 @@ body {
 .panes-container {
     flex: 1;
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Default 66.67% / 33.33% split */
+    grid-template-columns: 1fr 420px; /* Fixed right column width for 6 thermometers */
     gap: 1px;
     background: #3e3e42;
     min-height: 0;
@@ -286,9 +286,13 @@ body {
     min-width: 600px; /* Prevents total collapse */
 }
 
-.left-column,
+.left-column {
+    min-width: 200px; /* Prevents left column collapse */
+}
+
 .right-column {
-    min-width: 200px; /* Prevents individual column collapse */
+    min-width: 320px; /* Ensures right column can fit 6 thermometers */
+    max-width: 420px; /* Prevents right column from getting too wide */
 }
 
 /* Left column container - 60% top (source), 40% bottom (console) */
@@ -1375,9 +1379,9 @@ body {
 
 /* Additional medium-small screen adjustments */
 @media (max-width: 800px) {
-    /* Even more balanced layout for smaller screens */
+    /* Smaller fixed right column for small screens */
     .panes-container {
-        grid-template-columns: 1fr 1fr; /* 50%/50% split for very small screens */
+        grid-template-columns: 1fr 320px; /* Smaller fixed right column */
     }
     
     /* Make elements even more compact */
@@ -1515,9 +1519,9 @@ body {
 
 /* Better responsive behavior for medium screens */
 @media (max-width: 1000px) {
-    /* Adjust column proportions for smaller screens */
+    /* Maintain fixed right column width for consistency */
     .panes-container {
-        grid-template-columns: 1.5fr 1fr; /* More balanced 60%/40% instead of 67%/33% */
+        grid-template-columns: 1fr 380px; /* Slightly smaller right column for medium screens */
     }
     
     /* Make cow gallery more compact */
@@ -1619,4 +1623,103 @@ body {
 
 .loading {
     animation: pulse 1.5s infinite;
+}
+
+/* Pixel Pasture Styles */
+.pixel-pasture-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 15px;
+    gap: 10px;
+    background: linear-gradient(to bottom, #87CEEB 0%, #98FB98 70%, #228B22 100%);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.pasture-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.pasture-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.pasture-btn:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+.pasture-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.pixel-canvas-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border-radius: 8px;
+    border: 3px solid #4682B4;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+#pixel-canvas {
+    border-radius: 4px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    background: transparent;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+}
+
+.pasture-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.9);
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+.stat-items {
+    display: flex;
+    gap: 30px;
+}
+
+.pasture-stats .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.pasture-stats .stat-label {
+    font-size: 11px;
+    color: #666;
+    font-weight: 500;
+}
+
+.pasture-stats .stat-value {
+    font-size: 14px;
+    color: #2F4F2F;
+    font-weight: 600;
 }
