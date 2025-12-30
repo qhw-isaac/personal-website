@@ -1465,10 +1465,10 @@ function initPixelPasture() {
         console.error('❌ Failed to load cow image');
     };
     
-    // Cow dimensions (much bigger for better visibility)
+    // Cow dimensions (elongated vertically for better proportions)
     const cowSprites = {
-        width: 80, // Much larger cow
-        height: 64
+        width: 80, // Width stays the same
+        height: 85  // Taller for more realistic proportions
     };
     
     // Grass colors for different growth stages
@@ -1565,17 +1565,18 @@ function initPixelPasture() {
                 const speedMultiplier = isDay ? 1.8 : 0.6;
                 this.x += this.vx * speedMultiplier;
                 
-                // Physics: always apply gravity and movement when not on ground
-                if (this.y < this.baseY - 1 || this.isJumping) {
-                    this.y += this.vy;
-                    this.vy += this.gravity; // Apply gravity
-                }
+                // More gradual physics system
+                this.y += this.vy;
+                this.vy += this.gravity; // Always apply gravity
                 
-                // Smooth landing when close to ground
-                if (this.y >= this.baseY - 1) {
-                    // If moving downward and close to ground, land smoothly
-                    if (this.vy >= 0) {
-                        this.y = this.baseY;
+                // Gradual landing with bounce dampening
+                if (this.y >= this.baseY) {
+                    // Soft landing with bounce reduction
+                    this.y = this.baseY;
+                    this.vy = this.vy * -0.3; // Small bounce that dampens quickly
+                    
+                    // Stop bouncing when velocity is very small
+                    if (Math.abs(this.vy) < 0.5) {
                         this.vy = 0;
                         this.isJumping = false;
                     }
@@ -1600,13 +1601,19 @@ function initPixelPasture() {
                     this.direction = this.vx > 0 ? 1 : -1;
                 }
             } else {
-                // When grazing, gradually settle to ground if not already there
+                // When grazing, use gentle physics to settle
                 if (this.y > this.baseY) {
-                    this.y = Math.max(this.baseY, this.y - 2); // Gradual descent
+                    this.vy += this.gravity * 0.5; // Gentler gravity when grazing
+                    this.y += this.vy;
+                    
+                    if (this.y >= this.baseY) {
+                        this.y = this.baseY;
+                        this.vy = 0;
+                    }
                 } else {
                     this.y = this.baseY;
+                    this.vy = 0;
                 }
-                this.vy = 0;
                 this.isJumping = false;
             }
         }
