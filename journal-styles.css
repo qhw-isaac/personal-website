@@ -1568,14 +1568,14 @@ section {
         display: none !important;
     }
     
-    /* Hide all absolutely positioned container divs in the top-right */
-    div[style*="position: absolute; top: 24px; right: 24px"] {
+    /* Hide tech icon containers but keep tape visible */
+    div[style*="position: absolute; top: 24px; right: 24px"][style*="z-index: 15"] {
         display: none !important;
     }
     
-    /* Catch any other absolutely positioned icons */
-    div[style*="position: absolute"][style*="right: 24px"][style*="z-index: 15"] {
-        display: none !important;
+    /* Show tape in top-right corner on mobile */
+    div[style*="position: absolute; top: -8px; right: -8px"][style*="z-index: 10"] {
+        display: block !important;
     }
     
     /* Ensure full width on mobile */

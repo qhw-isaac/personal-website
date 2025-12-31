@@ -435,11 +435,13 @@ section {
     
     .study-summary-pocket {
         min-width: auto;
-        width: 90%;
+        width: calc(100% - 2rem);
         max-width: 400px;
+        margin: 0 auto;
         padding: var(--space-md) var(--space-lg);
         gap: var(--space-md);
         border-radius: 30px;
+        box-sizing: border-box;
     }
     
     .metric-value {
@@ -478,6 +480,9 @@ section {
         gap: var(--space-sm);
         padding: var(--space-lg);
         border-radius: 25px;
+        width: calc(100% - 1rem);
+        margin: 0 auto;
+        box-sizing: border-box;
     }
     
     .summary-divider {
