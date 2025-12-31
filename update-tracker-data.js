@@ -172,25 +172,38 @@ function updateLandingPageParameters(data) {
     // Sort by lifetime hours descending
     filteredData.sort((a, b) => b.lifetime - a.lifetime);
     
-    // Create the parameters text
-    const parametersText = filteredData
-        .map(item => `${item.name}: ${formatHours(item.lifetime)} hrs`)
-        .join('<br>');
-    
     // Read the current index.html content
     let content = fs.readFileSync(landingPath, 'utf-8');
     
-    // Find and replace the parameters section
-    const parameterRegex = /(<h4>Parameters<\/h4>\s*<p>)(.*?)(<\/p>)/s;
-    const match = content.match(parameterRegex);
+    // Update Economics hours
+    const economicsHours = filteredData.find(item => item.name === 'Economics')?.lifetime || 0;
+    content = content.replace(
+        /(<div class="metric-value">)[\d.]+(\s*<span class="hrs-unit">hrs<\/span><\/div>\s*<div class="metric-label">Economics<\/div>)/,
+        `$1${formatHours(economicsHours)}$2`
+    );
     
-    if (match) {
-        const newContent = content.replace(parameterRegex, `$1${parametersText}$3`);
-        fs.writeFileSync(landingPath, newContent);
-        console.log('✅ Updated landing page parameters');
-    } else {
-        console.log('⚠️  Warning: Could not find parameters section in index.html');
-    }
+    // Update Animal Welfare hours
+    const animalWelfareHours = filteredData.find(item => item.name === 'Animal Welfare')?.lifetime || 0;
+    content = content.replace(
+        /(<div class="metric-value">)[\d.]+(\s*<span class="hrs-unit">hrs<\/span><\/div>\s*<div class="metric-label">Animal&nbsp;Welfare<\/div>)/,
+        `$1${formatHours(animalWelfareHours)}$2`
+    );
+    
+    // Update Mathematics hours
+    const mathematicsHours = filteredData.find(item => item.name === 'Mathematics')?.lifetime || 0;
+    content = content.replace(
+        /(<div class="metric-value">)[\d.]+(\s*<span class="hrs-unit">hrs<\/span><\/div>\s*<div class="metric-label">Mathematics<\/div>)/,
+        `$1${formatHours(mathematicsHours)}$2`
+    );
+    
+    // Update the last updated date
+    content = content.replace(
+        /(Last updated: )([^<]+)/,
+        `$1${getCurrentDate()}`
+    );
+    
+    fs.writeFileSync(landingPath, content);
+    console.log('✅ Updated landing page horizontal bar with latest hours');
 }
 
 // Update this-week-data.js

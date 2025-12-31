@@ -21,17 +21,17 @@ const LIFETIME_TRACKER_CONFIG = {
         },
         { 
             name: "Leadership", 
-            hours: 229.38, 
+            hours: 229.78, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
             name: "Pedagogy", 
-            hours: 159.58, 
+            hours: 163.12, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
             name: "Mathematics", 
-            hours: 154.72, 
+            hours: 154.77, 
             color: "#6e87a8" // Cool slate blue - logic, precision, geometric elegance
         },
         { 
@@ -41,12 +41,12 @@ const LIFETIME_TRACKER_CONFIG = {
         },
         { 
             name: "Computer Science", 
-            hours: 15.08, 
+            hours: 22.02, 
             color: "#3a9d9d" // Bright teal/terminal cyan
         },
         { 
             name: "French", 
-            hours: 5.9, 
+            hours: 5.92, 
             color: "#b07652" // Warm terracotta/burnt sienna - ancient pottery, classical scrolls, aged clay
         }
     ]
