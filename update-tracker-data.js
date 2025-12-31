@@ -196,9 +196,9 @@ function updateLandingPageParameters(data) {
         `$1${formatHours(mathematicsHours)}$2`
     );
     
-    // Update the last updated date
+    // Update the data range with current date as end date
     content = content.replace(
-        /(Last updated: )([^<]+)/,
+        /(Data range: Jan 1, 2025 - )([^<]+)/,
         `$1${getCurrentDate()}`
     );
     
