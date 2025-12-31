@@ -551,12 +551,22 @@ section {
 .current-week h2::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -35px;
     left: 50%;
     transform: translateX(-50%);
     width: 60px;
     height: 2px;
     background: var(--gold-leaf);
+}
+
+.study-period {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: -2.2rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
 }
 
 .study-summary-container {

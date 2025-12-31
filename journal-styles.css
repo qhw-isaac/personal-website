@@ -1546,6 +1546,38 @@ section {
 
 /* Mobile fixes for projects page */
 @media (max-width: 768px) {
+    /* Hide all tech icons and organizational logos on mobile to prevent covering content */
+    img[src*="devicon"] {
+        display: none !important;
+    }
+    
+    /* Hide Excel, PowerBI, and other tech icons */
+    img[alt="Excel"], 
+    img[alt="Power BI"],
+    img[alt="PowerBI"],
+    img[alt="R"],
+    img[alt="Python"] {
+        display: none !important;
+    }
+    
+    /* Hide UBC, Mensa, PAW, and other organizational logos */
+    img[src*="ubc-"],
+    img[src*="mensa-"],
+    img[src*="paw-"],
+    img[src*="cursor.jpg"] {
+        display: none !important;
+    }
+    
+    /* Hide all absolutely positioned container divs in the top-right */
+    div[style*="position: absolute; top: 24px; right: 24px"] {
+        display: none !important;
+    }
+    
+    /* Catch any other absolutely positioned icons */
+    div[style*="position: absolute"][style*="right: 24px"][style*="z-index: 15"] {
+        display: none !important;
+    }
+    
     /* Ensure full width on mobile */
     body {
         margin: 0;
@@ -1564,13 +1596,14 @@ section {
     /* Header mobile fixes */
     .site-header {
         width: 100%;
-        padding: 1rem 0;
-        margin: 0;
+        padding: var(--space-xl) 0 var(--space-lg);
+        margin-bottom: var(--space-xl);
     }
     
     .header-content {
         width: 100%;
-        padding: 0 1rem;
+        padding: 0 var(--space-lg);
+        margin-bottom: var(--space-lg);
     }
     
     /* Navigation mobile fixes */
@@ -1583,8 +1616,8 @@ section {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 0 1rem;
-        gap: 0.5rem;
+        padding: 0 var(--space-lg);
+        gap: var(--space-sm);
     }
     
     .main-nav li {
@@ -1594,7 +1627,7 @@ section {
     
     .main-nav a {
         font-size: 0.9rem;
-        padding: 0.5rem 0.75rem;
+        padding: var(--space-xs) var(--space-sm);
     }
     
     /* Footer mobile fixes */
@@ -1648,20 +1681,31 @@ section {
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
+    /* Ensure all icons are hidden on very small screens */
+    div[style*="position: absolute"][style*="top:"][style*="right:"] {
+        display: none !important;
+    }
+    
+    /* Hide any remaining icon images */
+    img[style*="width: 24px"],
+    img[style*="height: 24px"] {
+        display: none !important;
+    }
+    
     .container {
         padding: 0 0.5rem;
     }
     
     .site-header {
-        padding: 0.5rem 0;
+        padding: var(--space-lg) 0;
     }
     
     .header-content {
-        padding: 0 0.5rem;
+        padding: 0 var(--space-md);
     }
     
     .main-nav ul {
-        padding: 0 0.5rem;
+        padding: 0 var(--space-md);
     }
     
     .site-footer {
