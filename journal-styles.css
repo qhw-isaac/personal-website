@@ -1563,8 +1563,7 @@ section {
     /* Hide UBC, Mensa, PAW, and other organizational logos */
     img[src*="ubc-"],
     img[src*="mensa-"],
-    img[src*="paw-"],
-    img[src*="cursor.jpg"] {
+    img[src*="paw-"] {
         display: none !important;
     }
     
