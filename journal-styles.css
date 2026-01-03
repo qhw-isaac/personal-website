@@ -1573,8 +1573,16 @@ section {
         display: none !important;
     }
     
-    /* Show tape in top-right corner on mobile */
-    div[style*="position: absolute; top: -8px; right: -8px"][style*="z-index: 10"] {
+    /* Show all tape elements on mobile - ensure they're always visible */
+    div[style*="position: absolute"][style*="z-index: 10"][style*="transform: rotate"] {
+        display: block !important;
+    }
+    
+    /* Specifically ensure tape corners are visible */
+    div[style*="position: absolute; top: -8px; right: -8px"][style*="z-index: 10"],
+    div[style*="position: absolute; top: -8px; left: -8px"][style*="z-index: 10"],
+    div[style*="position: absolute; bottom: -8px; right: -8px"][style*="z-index: 10"],
+    div[style*="position: absolute; bottom: -8px; left: -8px"][style*="z-index: 10"] {
         display: block !important;
     }
     
@@ -1681,8 +1689,8 @@ section {
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
-    /* Ensure all icons are hidden on very small screens */
-    div[style*="position: absolute"][style*="top:"][style*="right:"] {
+    /* Hide tech icon containers more specifically - only those with z-index 15 (icons) */
+    div[style*="position: absolute"][style*="top: 24px"][style*="right: 24px"][style*="z-index: 15"] {
         display: none !important;
     }
     

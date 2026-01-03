@@ -414,6 +414,18 @@ section {
         --space-xxl: 2.5rem;
     }
     
+    /* Prevent horizontal scrolling */
+    body {
+        overflow-x: hidden;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 var(--container-padding);
+        box-sizing: border-box;
+    }
+    
     .site-title {
         font-size: 2.2rem;
     }
@@ -434,7 +446,7 @@ section {
     }
     
     .study-summary-pocket {
-        min-width: auto;
+        min-width: auto !important;
         width: calc(100% - 2rem);
         max-width: 400px;
         margin: 0 auto;
@@ -442,6 +454,7 @@ section {
         gap: var(--space-md);
         border-radius: 30px;
         box-sizing: border-box;
+        border: 3px solid var(--copper);
     }
     
     .metric-value {
@@ -481,8 +494,10 @@ section {
         padding: var(--space-lg);
         border-radius: 25px;
         width: calc(100% - 1rem);
+        min-width: auto !important;
         margin: 0 auto;
         box-sizing: border-box;
+        border: 3px solid var(--copper);
     }
     
     .summary-divider {
@@ -568,6 +583,8 @@ section {
     display: flex;
     justify-content: center;
     margin: var(--space-xl) 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .study-summary-pocket {
@@ -583,7 +600,9 @@ section {
         inset 0 1px 3px rgba(212, 175, 55, 0.3);
     position: relative;
     min-width: 500px;
+    max-width: 100%;
     justify-content: space-around;
+    box-sizing: border-box;
 }
 
 .study-summary-pocket::before {
