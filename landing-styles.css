@@ -235,6 +235,76 @@ section {
     border-bottom-color: var(--midnight-navy);
 }
 
+/* Intro Header */
+.intro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-md);
+}
+
+.intro-header h2 {
+    margin-bottom: 0;
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: -6px;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--aged-ivory);
+    border: 2px solid var(--sepia);
+    border-radius: 50%;
+    color: var(--oxford-blue);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(114, 47, 55, 0.1), transparent);
+    transition: left 0.4s ease;
+}
+
+.social-icon:hover::before {
+    left: 100%;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    background: var(--oxford-blue);
+    color: var(--aged-ivory);
+    border-color: var(--oxford-blue);
+    box-shadow: var(--shadow-medium);
+}
+
+.social-icon svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.social-icon:hover svg {
+    transform: scale(1.1);
+}
+
 /* Focus Grid */
 .current-focus h3 {
     text-align: center;
@@ -445,6 +515,16 @@ section {
         padding: var(--space-lg);
     }
     
+    .intro-header {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+    
+    .intro-header h2 {
+        margin-bottom: var(--space-sm);
+    }
+    
     .study-summary-pocket {
         min-width: auto !important;
         width: calc(100% - 2rem);
@@ -481,6 +561,16 @@ section {
     
     .intro-section {
         padding: var(--space-md);
+    }
+    
+    .social-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .social-icon svg {
+        width: 20px;
+        height: 20px;
     }
     
     .focus-card,
