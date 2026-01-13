@@ -13,43 +13,43 @@
 // ================================================
 
 const TIME_TRACKER_CONFIG = {
-    weekOf: "Jan 5 - 11, 2026",
-    lastUpdated: "11:55 PM, Jan 11, 2026",
-    maxHours: 27, // Maximum hours for tallest bar (round up from actual max)
+    weekOf: "Jan 12 - 18, 2026",
+    lastUpdated: "4:20 AM, Jan 13, 2026",
+    maxHours: 5, // Maximum hours for tallest bar (round up from actual max)
     activities: [
         { 
+            name: "Computer Science", 
+            hours: 4.47, 
+            color: "#3a9d9d" // Bright teal/terminal cyan
+        },
+        { 
             name: "Economics", 
-            hours: 26.72, 
+            hours: 3.23, 
             color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
         },
         { 
-            name: "Leadership", 
-            hours: 12.35, 
-            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
-        },
-        { 
             name: "Pedagogy", 
-            hours: 9.3, 
+            hours: 2.68, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
             name: "Animal Welfare", 
-            hours: 7.45, 
+            hours: 1.17, 
             color: "#5d8a5d" // Vibrant forest green - nature, earth, conservation
         },
         { 
-            name: "Computer Science", 
-            hours: 1.83, 
-            color: "#3a9d9d" // Bright teal/terminal cyan
+            name: "Leadership", 
+            hours: 0.62, 
+            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
             name: "Mathematics", 
-            hours: 0.52, 
+            hours: 0.25, 
             color: "#6e87a8" // Cool slate blue - logic, precision, geometric elegance
         },
         { 
             name: "French", 
-            hours: 0.13, 
+            hours: 0.03, 
             color: "#b07652" // Warm terracotta/burnt sienna - ancient pottery, classical scrolls, aged clay
         }
     ]
