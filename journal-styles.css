@@ -1560,10 +1560,11 @@ section {
         display: none !important;
     }
     
-    /* Hide UBC, Mensa, PAW, and other organizational logos */
-    img[src*="ubc-"],
-    img[src*="mensa-"],
-    img[src*="paw-"] {
+    /* Hide UBC, Mensa, PAW, and other organizational logos (only the small 24x24 icons) */
+    img[src*="ubc-logo"],
+    img[src*="mensa-logo"],
+    img[src*="paw-logo"],
+    img[src*="ubc-crest"] {
         display: none !important;
     }
     
