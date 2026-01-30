@@ -11,7 +11,7 @@ const LIFETIME_TRACKER_CONFIG = {
     activities: [
         { 
             name: "Economics", 
-            hours: 984.83, 
+            hours: 999.97, 
             color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
         },
         { 
@@ -21,32 +21,22 @@ const LIFETIME_TRACKER_CONFIG = {
         },
         { 
             name: "Leadership", 
-            hours: 260.78, 
+            hours: 260.82, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
             name: "Pedagogy", 
-            hours: 217.57, 
+            hours: 223.18, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
             name: "Mathematics", 
-            hours: 157.42, 
+            hours: 157.5, 
             color: "#6e87a8" // Cool slate blue - logic, precision, geometric elegance
         },
         { 
-            name: "Philosophy", 
-            hours: 110.17, 
-            color: "#8b5ba8" // Deep purple - wisdom, contemplation, ancient scrolls
-        },
-        { 
-            name: "Computer Science", 
-            hours: 31.07, 
-            color: "#3a9d9d" // Bright teal/terminal cyan
-        },
-        { 
             name: "French", 
-            hours: 6.55, 
+            hours: 6.57, 
             color: "#b07652" // Warm terracotta/burnt sienna - ancient pottery, classical scrolls, aged clay
         }
     ]
