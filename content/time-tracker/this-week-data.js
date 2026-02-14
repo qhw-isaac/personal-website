@@ -13,18 +13,23 @@
 
 const TIME_TRACKER_CONFIG = {
     weekOf: "Feb 9 - 15, 2026",
-    lastUpdated: "1:25 AM, Feb 10, 2026",
-    maxHours: 5, // Maximum hours for tallest bar (round up from actual max)
+    lastUpdated: "5:41 PM, Feb 13, 2026",
+    maxHours: 26, // Maximum hours for tallest bar (round up from actual max)
     activities: [
         { 
+            name: "Economics", 
+            hours: 25.27, 
+            color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
+        },
+        { 
             name: "Pedagogy", 
-            hours: 4.02, 
+            hours: 7.33, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
-            name: "Economics", 
-            hours: 1.02, 
-            color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
+            name: "Leadership", 
+            hours: 3.83, 
+            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
             name: "Computer Science", 
@@ -33,22 +38,17 @@ const TIME_TRACKER_CONFIG = {
         },
         { 
             name: "Animal Welfare", 
-            hours: 0.6, 
+            hours: 0.65, 
             color: "#5d8a5d" // Vibrant forest green - nature, earth, conservation
         },
         { 
-            name: "Leadership", 
-            hours: 0.32, 
-            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
-        },
-        { 
             name: "Mathematics", 
-            hours: 0.07, 
+            hours: 0.35, 
             color: "#6e87a8" // Cool slate blue - logic, precision, geometric elegance
         },
         { 
             name: "French", 
-            hours: 0.02, 
+            hours: 0.07, 
             color: "#b07652" // Warm terracotta/burnt sienna - ancient pottery, classical scrolls, aged clay
         }
     ]
