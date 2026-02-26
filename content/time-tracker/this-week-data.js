@@ -12,43 +12,43 @@
 // ================================================
 
 const TIME_TRACKER_CONFIG = {
-    weekOf: "Feb 9 - 15, 2026",
-    lastUpdated: "6:56 PM, Feb 15, 2026",
-    maxHours: 28, // Maximum hours for tallest bar (round up from actual max)
+    weekOf: "Feb 23 - 1, 2026",
+    lastUpdated: "10:36 PM, Feb 25, 2026",
+    maxHours: 21, // Maximum hours for tallest bar (round up from actual max)
     activities: [
         { 
             name: "Economics", 
-            hours: 27.6, 
+            hours: 20.78, 
             color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
         },
         { 
             name: "Pedagogy", 
-            hours: 7.33, 
-            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
-        },
-        { 
-            name: "Leadership", 
-            hours: 5.43, 
+            hours: 4.3, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
             name: "Computer Science", 
-            hours: 0.83, 
+            hours: 3.02, 
             color: "#3a9d9d" // Bright teal/terminal cyan
         },
         { 
-            name: "Mathematics", 
-            hours: 0.67, 
-            color: "#6e87a8" // Cool slate blue - logic, precision, geometric elegance
-        },
-        { 
             name: "Animal Welfare", 
-            hours: 0.65, 
+            hours: 2.5, 
             color: "#5d8a5d" // Vibrant forest green - nature, earth, conservation
         },
         { 
+            name: "Leadership", 
+            hours: 1.6, 
+            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
+        },
+        { 
+            name: "Mathematics", 
+            hours: 0.43, 
+            color: "#6e87a8" // Cool slate blue - logic, precision, geometric elegance
+        },
+        { 
             name: "French", 
-            hours: 0.1, 
+            hours: 0.05, 
             color: "#b07652" // Warm terracotta/burnt sienna - ancient pottery, classical scrolls, aged clay
         }
     ]
