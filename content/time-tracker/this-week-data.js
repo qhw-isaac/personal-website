@@ -14,17 +14,17 @@
 
 const TIME_TRACKER_CONFIG = {
     weekOf: "Mar 16 - 22, 2026",
-    lastUpdated: "11:01 AM, Mar 19, 2026",
-    maxHours: 14, // Maximum hours for tallest bar (round up from actual max)
+    lastUpdated: "12:09 PM, Mar 21, 2026",
+    maxHours: 23, // Maximum hours for tallest bar (round up from actual max)
     activities: [
         { 
             name: "Economics", 
-            hours: 13.2, 
+            hours: 22.13, 
             color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
         },
         { 
             name: "Leadership", 
-            hours: 13.1, 
+            hours: 18.13, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
@@ -33,13 +33,18 @@ const TIME_TRACKER_CONFIG = {
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
+            name: "Animal Welfare", 
+            hours: 1, 
+            color: "#5d8a5d" // Vibrant forest green - nature, earth, conservation
+        },
+        { 
             name: "Mathematics", 
-            hours: 0.15, 
+            hours: 0.32, 
             color: "#6e87a8" // Cool slate blue - logic, precision, geometric elegance
         },
         { 
             name: "French", 
-            hours: 0.05, 
+            hours: 0.12, 
             color: "#b07652" // Warm terracotta/burnt sienna - ancient pottery, classical scrolls, aged clay
         }
     ]
