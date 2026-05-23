@@ -13,43 +13,43 @@
 // ================================================
 
 const TIME_TRACKER_CONFIG = {
-    weekOf: "Apr 27 - 3, 2026",
-    lastUpdated: "8:12 PM, Apr 29, 2026",
-    maxHours: 5, // Maximum hours for tallest bar (round up from actual max)
+    weekOf: "May 18 - 24, 2026",
+    lastUpdated: "11:17 AM, May 23, 2026",
+    maxHours: 14, // Maximum hours for tallest bar (round up from actual max)
     activities: [
         { 
-            name: "Pedagogy", 
-            hours: 4.93, 
-            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
-        },
-        { 
-            name: "Animal Welfare", 
-            hours: 3.22, 
-            color: "#5d8a5d" // Vibrant forest green - nature, earth, conservation
-        },
-        { 
             name: "Economics", 
-            hours: 1.83, 
+            hours: 13.6, 
             color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
         },
         { 
-            name: "Philosophy", 
-            hours: 1.83, 
-            color: "#8b5ba8" // Deep purple - wisdom, contemplation, ancient scrolls
+            name: "Animal Welfare", 
+            hours: 5.02, 
+            color: "#5d8a5d" // Vibrant forest green - nature, earth, conservation
         },
         { 
-            name: "Leadership", 
-            hours: 0.35, 
-            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
+            name: "Computer Science", 
+            hours: 1.73, 
+            color: "#3a9d9d" // Bright teal/terminal cyan
         },
         { 
             name: "Mathematics", 
-            hours: 0.23, 
+            hours: 0.85, 
             color: "#6e87a8" // Cool slate blue - logic, precision, geometric elegance
         },
         { 
+            name: "Pedagogy", 
+            hours: 0.65, 
+            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
+        },
+        { 
+            name: "Leadership", 
+            hours: 0.37, 
+            color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
+        },
+        { 
             name: "French", 
-            hours: 0.02, 
+            hours: 0.12, 
             color: "#b07652" // Warm terracotta/burnt sienna - ancient pottery, classical scrolls, aged clay
         }
     ]
