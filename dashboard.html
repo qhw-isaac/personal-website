@@ -6,7 +6,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <title>Isaac Qi - Research Dashboard</title>
     <link rel="stylesheet" href="dashboard-styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Poppins:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -107,50 +107,45 @@
                     </div>
                 </div>
                 <div class="pane-content">
-                    <!-- Cow Gallery -->
+                    <!-- Cow Gallery (newspaper edition) -->
                     <div class="cow-gallery-container" id="cow-gallery-container">
-                        <div class="gallery-header">
-                            <h3>Cows I've Met</h3>
-                            <div class="gallery-counter">
-                                <span id="current-cow">1</span> / <span id="total-cows">8</span>
+                        <div class="gazette">
+                            <!-- Masthead -->
+                            <div class="gazette-masthead">
+                                <span class="gazette-title">The Pasture Gazette</span>
+                                <span class="gazette-counter">No. <span id="current-cow">1</span> of <span id="total-cows">8</span></span>
                             </div>
-                        </div>
-                        <div class="gallery-navigation">
-                            <button class="nav-btn prev-btn" id="prev-cow">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <div class="cow-display">
-                                <div class="cow-image-container">
+
+                            <!-- Feature article: full-height photo | stacked name + story -->
+                            <article class="gazette-article">
+                                <figure class="gazette-figure">
                                     <img id="cow-image" src="" alt="Cow" class="cow-image">
-                                </div>
-                                <div class="cow-info">
-                                    <h4 id="cow-name">Loading...</h4>
-                                    <div class="cow-details">
-                                        <div class="detail-item">
-                                            <span class="detail-label">Breed:</span>
-                                            <span id="cow-breed">-</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-label">Location:</span>
-                                            <span id="cow-location">-</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-label">Date Met:</span>
-                                            <span id="cow-date">-</span>
-                                        </div>
+                                </figure>
+                                <div class="gazette-text">
+                                    <h3 class="cow-name" id="cow-name">Loading...</h3>
+                                    <div class="gazette-byline">
+                                        <span id="cow-breed">-</span>
+                                        <span class="byline-sep">&bull;</span>
+                                        <span id="cow-location">-</span>
+                                        <span class="byline-sep">&bull;</span>
+                                        <span id="cow-date">-</span>
                                     </div>
-                                </div>
-                                <div class="cow-story">
-                                    <div class="story-label">Story:</div>
                                     <div class="story-content" id="cow-story">Loading...</div>
                                 </div>
+                            </article>
+
+                            <!-- Footer navigation -->
+                            <div class="gazette-footer">
+                                <button class="nav-btn prev-btn" id="prev-cow" aria-label="Previous cow">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <div class="gallery-dots" id="gallery-dots">
+                                    <!-- Navigation dots generated by JavaScript -->
+                                </div>
+                                <button class="nav-btn next-btn" id="next-cow" aria-label="Next cow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
                             </div>
-                            <button class="nav-btn next-btn" id="next-cow">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="gallery-dots" id="gallery-dots">
-                            <!-- Navigation dots generated by JavaScript -->
                         </div>
                     </div>
                     
@@ -241,6 +236,12 @@
 
             <!-- Right Column: Environment & Plots -->
             <div class="right-column" id="right-column">
+                <!-- Thin rail shown when the column is minimized -->
+                <button class="right-rail" id="expand-panel-btn" title="Show workspace" aria-label="Show workspace">
+                    <i class="fas fa-angles-left"></i>
+                    <span class="right-rail-label">Workspace</span>
+                </button>
+
                 <!-- Top Right Pane: Environment -->
                 <div class="pane environment-pane">
                 <div class="pane-header">
@@ -250,6 +251,7 @@
                         <div class="tab" data-tab="conn">Connections</div>
                     </div>
                     <div class="pane-toolbar">
+                        <button class="pane-btn collapse-panel-btn" id="collapse-panel-btn" title="Hide workspace" aria-label="Hide workspace"><i class="fas fa-angles-right"></i></button>
                         <button class="pane-btn" title="Refresh"><i class="fas fa-sync"></i></button>
                     </div>
                 </div>

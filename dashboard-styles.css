@@ -277,7 +277,7 @@ body {
 .panes-container {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 460px; /* Fixed right column width for 6 thermometers */
+    grid-template-columns: 1fr 430px; /* Fixed right column width for 6 thermometers */
     gap: 1px;
     background: #3e3e42;
     min-height: 0;
@@ -292,13 +292,13 @@ body {
 
 .right-column {
     min-width: 320px; /* Ensures right column can fit 6 thermometers */
-    max-width: 460px; /* Prevents right column from getting too wide */
+    max-width: 430px; /* Prevents right column from getting too wide */
 }
 
-/* Left column container - 60% top (source), 40% bottom (console) */
+/* Left column container - give the gazette the room, keep the console as a strip */
 .left-column {
     display: grid;
-    grid-template-rows: 13fr 7fr; /* 65% / 35% split */
+    grid-template-rows: 5fr 2fr; /* ~72% top (gazette) / ~28% bottom (console) */
     gap: 1px;
     position: relative;
     min-width: 0;
@@ -320,6 +320,59 @@ body {
 }
 
 /* No resize handles needed - using fixed responsive layout */
+
+/* ---- Right column minimize (collapse to a thin rail) ---- */
+.right-rail {
+    display: none; /* only shown when the column is collapsed */
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    padding: 12px 0;
+    background: #2d2d30;
+    border: none;
+    border-left: 1px solid #3e3e42;
+    color: #b0b0b0;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.right-rail:hover {
+    background: #37373b;
+    color: #ffffff;
+}
+
+.right-rail i {
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.right-rail-label {
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.panes-container.right-collapsed {
+    grid-template-columns: 1fr 34px;
+}
+
+.panes-container.right-collapsed .right-column {
+    display: flex;
+    min-width: 0;
+    max-width: none;
+}
+
+.panes-container.right-collapsed .right-column > .pane {
+    display: none;
+}
+
+.panes-container.right-collapsed .right-rail {
+    display: flex;
+}
 
 /* Pane Styles */
 .pane {
@@ -621,63 +674,217 @@ body {
 }
 
 /* Cow Gallery Styles */
+/* ================================================
+   COW GALLERY — "The Pasture Gazette" newspaper edition
+   A cream clipping pinned into the dark IDE pane.
+   ================================================ */
 .cow-gallery-container {
-    padding: 15px;
+    padding: 16px;
     height: 100%;
     display: flex;
-    flex-direction: column;
     background: #1e1e1e;
+    overflow: hidden;
 }
 
-.gallery-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #3e3e42;
-}
-
-.gallery-header h3 {
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0;
-}
-
-.gallery-counter {
-    color: #808080;
-    font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
-}
-
-.gallery-navigation {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+/* The paper clipping itself */
+.gazette {
     flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: #f4ecd8;
+    color: #211c14;
+    border-radius: 3px;
+    padding: 18px 26px 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+    /* faint aged-paper vignette */
+    background-image:
+        radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 60%),
+        radial-gradient(100% 120% at 100% 100%, rgba(120, 95, 50, 0.10), rgba(120, 95, 50, 0) 55%);
+    overflow: hidden;
+}
+
+/* ---- Masthead ---- */
+.gazette-masthead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 3px double #211c14;
+    flex-shrink: 0;
+}
+
+.gazette-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    color: #211c14;
+    white-space: nowrap;
+}
+
+.gazette-counter {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    color: #6b5d44;
+    white-space: nowrap;
+}
+
+/* ---- Article: full-height photo on the left, stacked text on the right ---- */
+.gazette-article {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 24px;
+    padding-top: 12px;
+    overflow: hidden;
+}
+
+.gazette-figure {
+    margin: 0;
+    padding: 6px;
+    background: #fbf6ea;
+    border: 1px solid #cdbf9c;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+    /* Full-height portrait (stretches to the article height via the parent's
+       align-items: stretch), but with a constant width so it never jumps size
+       at a breakpoint the way it used to. */
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+}
+
+.cow-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.35) contrast(1.05) sepia(0.12);
+    transition: filter 0.3s ease;
+}
+
+.cow-image:hover {
+    filter: grayscale(0) contrast(1) sepia(0);
+}
+
+/* Right column: name, byline, story stacked */
+.gazette-text {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.cow-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: 27px;
+    line-height: 1.05;
+    margin: 0;
+    color: #1a150e;
+    text-align: left;
+    flex-shrink: 0;
+}
+
+.gazette-byline {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #5c4f3a;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: baseline;
+    margin: 7px 0 0;
+    padding-bottom: 11px;
+    border-bottom: 1px solid rgba(33, 28, 20, 0.25);
+    flex-shrink: 0;
+}
+
+.byline-sep {
+    margin: 0 7px;
+    color: #a08a5e;
+}
+
+.story-content {
+    flex: 1;
+    min-height: 0;
+    margin-top: 13px;
+    /* only the story scrolls; reserve the scrollbar gutter and pad so the
+       justified text never runs underneath the scrollbar */
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding-right: 14px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #2b2418;
+    text-align: justify;
+    hyphens: auto;
+    /* Firefox scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #b9a677 transparent;
+}
+
+/* Paper-toned scrollbar for the story (overrides the dark global one) */
+.story-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.story-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.story-content::-webkit-scrollbar-thumb {
+    background: #c4b184;
+    border-radius: 4px;
+    border: 2px solid #f4ecd8;
+}
+
+.story-content::-webkit-scrollbar-thumb:hover {
+    background: #a8915f;
+}
+
+/* ---- Footer nav ---- */
+.gazette-footer {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 16px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 3px double #211c14;
+    flex-shrink: 0;
 }
 
 .nav-btn {
-    background: #2d2d30;
-    border: 2px solid #3e3e42;
-    color: #d4d4d4;
-    width: 40px;
-    height: 40px;
+    background: transparent;
+    border: 1.5px solid #6b5d44;
+    color: #3a3122;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 13px;
     transition: all 0.2s ease;
     flex-shrink: 0;
 }
 
 .nav-btn:hover {
-    background: #3e3e42;
-    border-color: #007acc;
-    color: #ffffff;
+    background: #211c14;
+    border-color: #211c14;
+    color: #f4ecd8;
 }
 
 .nav-btn:disabled {
@@ -685,146 +892,30 @@ body {
     cursor: not-allowed;
 }
 
-.cow-display {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 24px;
-    flex: 1;
-    max-width: 760px;
-    width: 100%;
-}
-
-.cow-image-container {
-    width: 220px;
-    height: 220px;
-    border-radius: 10px;
-    overflow: hidden;
-    background: #2d2d30;
-    border: 2px solid #3e3e42;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex-shrink: 0;
-}
-
-.cow-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.cow-image:hover {
-    transform: scale(1.05);
-}
-
-.cow-info {
-    text-align: left;
-    flex: 0 0 175px;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.cow-info h4 {
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 3px 0;
-}
-
-.cow-details {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.detail-item {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    padding: 8px 0;
-    border-bottom: 1px solid #3e3e42;
-}
-
-.detail-item:last-child {
-    border-bottom: none;
-}
-
-.detail-label {
-    color: #808080;
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.detail-item span:last-child {
-    color: #d4d4d4;
-    font-size: 14px;
-    font-weight: 400;
-    margin-left: 0;
-}
-
-.cow-story {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.story-label {
-    color: #808080;
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    flex-shrink: 0;
-}
-
-.story-content {
-    color: #d4d4d4;
-    font-size: 13px;
-    line-height: 1.6;
-    font-style: italic;
-    background: rgba(45, 45, 48, 0.4);
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #007acc;
-    height: 200px;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-
 .gallery-dots {
     display: flex;
     justify-content: center;
     gap: 8px;
-    margin-top: 15px;
 }
 
 .gallery-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    background: #3e3e42;
+    background: transparent;
+    border: 1px solid #6b5d44;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .gallery-dot.active {
-    background: #007acc;
-    transform: scale(1.2);
+    background: #211c14;
+    border-color: #211c14;
+    transform: scale(1.25);
 }
 
 .gallery-dot:hover {
-    background: #5a5a5a;
+    background: #a08a5e;
 }
 
 /* Game Pane Styles */
@@ -1375,23 +1466,21 @@ body {
         grid-template-columns: 1fr 320px; /* Smaller fixed right column */
     }
     
-    /* Make elements even more compact */
-    .cow-image-container {
-        width: 120px;
-        height: 120px;
+    /* Make the gazette more compact */
+    .gazette {
+        padding: 14px 18px 12px;
     }
-    
+
+    .gazette-title {
+        font-size: 23px;
+    }
+
+    .cow-name {
+        font-size: 22px;
+    }
+
     .story-content {
-        height: 100px;
-        font-size: 11px;
-    }
-    
-    .cow-details {
-        font-size: 12px;
-    }
-    
-    .cow-info h4 {
-        text-align: center; /* Center the cow name */
+        font-size: 13px;
     }
 }
 
@@ -1422,57 +1511,47 @@ body {
     
     /* Make cow gallery mobile-optimized */
     .cow-gallery-container {
-        padding: 15px;
+        padding: 12px;
     }
-    
-    .cow-display {
+
+    /* Stack the photo above the text when the pane is full-width */
+    .gazette-article {
         flex-direction: column;
-        gap: 15px;
-        align-items: center;
+        align-items: stretch;
+        gap: 14px;
+        overflow-y: auto;
     }
-    
-    .cow-image-container {
-        width: 200px;
+
+    /* higher specificity so it wins over the max-width:1000px figure rule */
+    .gazette-article .gazette-figure {
+        width: 100%;
         height: 200px;
     }
-    
-    .cow-info {
+
+    .cow-name {
         text-align: center;
-        width: 100%;
-        align-self: center;
-        margin: 0 auto;
     }
-    
-    .cow-info h4 {
-        text-align: center; /* Center the cow name */
+
+    .gazette-byline {
+        justify-content: center;
     }
-    
-    .cow-story {
-        margin: 10px 0 0 0;
-    }
-    
+
     .story-content {
-        height: 150px;
-        font-size: 13px;
+        font-size: 14px;
     }
-    
+
     /* Make navigation buttons more touch-friendly */
     .nav-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 18px;
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
     }
-    
-    .gallery-dots {
-        margin-top: 20px;
-    }
-    
+
     .gallery-dot {
-        width: 12px;
-        height: 12px;
-        margin: 0 8px;
+        width: 11px;
+        height: 11px;
     }
-    
+
     /* Make tabs more compact on mobile */
     .tab {
         padding: 3px 8px;
@@ -1496,15 +1575,18 @@ body {
         width: 100px;
     }
     
-    .cow-image-container {
-        width: 180px;
-        height: 180px;
+    .gazette {
+        padding: 12px 14px 10px;
     }
-    
+
+    .gazette-title {
+        font-size: 20px;
+    }
+
     .nav-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 16px;
+        width: 42px;
+        height: 42px;
+        font-size: 15px;
     }
 }
 
@@ -1515,39 +1597,13 @@ body {
         grid-template-columns: 1fr 380px; /* Slightly smaller right column for medium screens */
     }
     
-    /* Make cow gallery more compact */
-    .cow-display {
-        flex-direction: column;
-        gap: 12px;
-        align-items: center;
+    /* Keep the photo a constant size; only scale the type down a touch. */
+    .gazette-title {
+        font-size: 22px;
     }
-    
-    .cow-image-container {
-        width: 140px;
-        height: 140px;
-    }
-    
-    .cow-info {
-        text-align: center;
-        flex: none;
-        width: 100%;
-        align-self: center;
-        margin: 0 auto;
-    }
-    
-    .cow-info h4 {
-        text-align: center; /* Center the cow name */
-    }
-    
-    .cow-story {
-        margin-left: 0;
-        margin-top: 8px;
-        max-height: 120px; /* Smaller on medium screens */
-    }
-    
-    .story-content {
-        height: 120px;
-        font-size: 12px;
+
+    .cow-name {
+        font-size: 21px;
     }
 }
 

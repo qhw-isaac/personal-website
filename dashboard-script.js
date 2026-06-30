@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setupEnvironmentTabs();
         setupEnvCategoryClicks();
         setupPlotsTabSwitching();
+        setupRightColumnToggle();
         initTimeTracker();
     initFeedACowGame();
         initCowGallery();
@@ -130,6 +131,36 @@ function setupEnvironmentTabs() {
     });
 
     setupConnectionsPane(panes.conn);
+}
+
+// ================================================
+// ◀ RIGHT COLUMN MINIMIZE / RESTORE
+// ================================================
+// Click to collapse the right column to a thin rail,
+// click the rail to bring it back.
+// ================================================
+function setupRightColumnToggle() {
+    const panes = document.getElementById('panes-container');
+    const collapseBtn = document.getElementById('collapse-panel-btn');
+    const expandBtn = document.getElementById('expand-panel-btn');
+    if (!panes) return;
+
+    const setCollapsed = (collapsed) => {
+        panes.classList.toggle('right-collapsed', collapsed);
+    };
+
+    if (collapseBtn) {
+        collapseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setCollapsed(true);
+        });
+    }
+    if (expandBtn) {
+        expandBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setCollapsed(false);
+        });
+    }
 }
 
 function setupConnectionsPane(connPane) {
@@ -913,21 +944,22 @@ function updateCowDisplay() {
             fontFamily: "'Poppins', sans-serif"
         });
     } else {
-        // Reset to normal styling
+        // Reset to normal styling — clear any inline overrides so the
+        // newspaper (.cow-name) CSS governs the headline.
         showElements([cowGalleryElements.cowImage, cowGalleryElements.cowBreed, cowGalleryElements.cowLocation, cowGalleryElements.cowDate, cowGalleryElements.cowStory]);
-        
+
         Object.assign(cowGalleryElements.cowName.style, {
-            color: "#ffffff",
-            fontSize: "20px",
-            fontWeight: "600",
-            width: "auto",
-            position: "static",
-            top: "auto",
-            left: "auto",
-            transform: "none",
-            textShadow: "none",
-            letterSpacing: "normal",
-            fontFamily: "'JetBrains Mono', monospace"
+            color: "",
+            fontSize: "",
+            fontWeight: "",
+            width: "",
+            position: "",
+            top: "",
+            left: "",
+            transform: "",
+            textShadow: "",
+            letterSpacing: "",
+            fontFamily: ""
         });
     }
 
