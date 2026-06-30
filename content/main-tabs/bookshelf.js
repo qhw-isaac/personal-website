@@ -133,7 +133,8 @@ function buildBookshelfHTML() {
         display:flex; align-items:flex-end; gap:5px;
         overflow-x:auto; overflow-y:visible;
         padding:48px 14px 18px;          /* top room for the lift, bottom for the ledge */
-        scrollbar-width:thin;
+        scrollbar-width:none;            /* Firefox: hide the scrollbar (still scrolls) */
+        -ms-overflow-style:none;         /* legacy Edge/IE */
         background-image:
             linear-gradient(to top, rgba(0,0,0,.4), rgba(0,0,0,0)),
             linear-gradient(to bottom, #8a6a44 0, #8a6a44 1px, #6b4a2b 1px, #4a3018 100%);
@@ -142,6 +143,8 @@ function buildBookshelfHTML() {
         background-size: 140px 14px, 140px 18px;
         background-attachment: local, local;
     }
+    /* Chrome/Safari/Edge: hide the shelf's scrollbar (scrolling still works) */
+    .bsf-shelf::-webkit-scrollbar { width:0; height:0; display:none; }
 
     .bsf-book {
         position:relative;
@@ -231,35 +234,36 @@ function buildBookshelfHTML() {
     }
     .bsf-lb-page { flex:1 1 0; display:flex; align-items:center; min-width:0; }
     .bsf-lb-page-left  { justify-content:flex-end; padding-right:34px; }
-    .bsf-lb-page-right { padding-left:34px; }
+    .bsf-lb-page-right { position:relative; align-items:flex-start; padding-left:34px; padding-top:6px; }
     .bsf-lb-cover {
         flex:0 0 auto; width:300px; height:456px; object-fit:cover;
         border-radius:2px;
         box-shadow:0 14px 30px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.45);
     }
     .bsf-lb-info { flex:1 1 auto; min-width:0; }
-    .bsf-lb-title  { font-family:'Poppins', sans-serif; color:#2c2620; font-size:27px; line-height:1.25; margin:0 0 12px; }
-    .bsf-lb-author { font-family:'JetBrains Mono', monospace; color:#8a6a3a; font-size:13px; margin:0 0 18px; }
-
-    /* Reading-log stats (from content/books/reading-log.csv) */
-    .bsf-lb-meta { display:none; }
-    .bsf-lb-meta.show { display:block; }
-    .bsf-lb-status {
-        display:inline-block; margin-bottom:16px;
-        padding:4px 11px; border-radius:999px;
-        font-family:'JetBrains Mono', monospace; font-size:11px;
-        text-transform:uppercase; letter-spacing:.07em;
-        border:1px solid currentColor;
+    /* Title sits at the top of the right page */
+    .bsf-lb-title {
+        font-family:'Playfair Display', Georgia, serif; font-weight:700;
+        color:#2c2620; font-size:28px; line-height:1.22; margin:0 0 12px;
     }
-    .bsf-lb-status.st-progress { color:#3f8a35; background:rgba(63,138,53,.13); }
-    .bsf-lb-status.st-pause    { color:#a4711a; background:rgba(164,113,26,.13); }
-    .bsf-lb-status.st-idle     { color:#7a7060; background:rgba(122,112,96,.13); }
-    .bsf-lb-status.st-complete { color:#2f6aa3; background:rgba(47,106,163,.13); }
-    .bsf-lb-stats { display:flex; gap:30px; }
-    .bsf-lb-stat-num   { display:block; font-family:'Poppins', sans-serif; color:#2c2620; font-size:22px; font-weight:600; }
-    .bsf-lb-stat-label { display:block; font-family:'JetBrains Mono', monospace; color:#8a7c62; font-size:10px; text-transform:uppercase; letter-spacing:.06em; margin-top:4px; }
+    .bsf-lb-author { font-family:'EB Garamond', Georgia, serif; font-style:italic; color:#6e4f28; font-size:18px; margin:0 0 22px; }
+
+    /* Stopwatch: understated aged ink in the bottom-left of the right page. */
+    .bsf-lb-watch {
+        position:absolute; left:34px; bottom:-22px; z-index:3;
+        display:inline-flex; align-items:center; gap:7px;
+        font-family:'EB Garamond', Georgia, serif; font-style:italic;
+        color:#6e6048; font-size:14px;
+    }
+    .bsf-lb-watch i { font-size:13px; color:#8a6a3a; font-style:normal; }
+    /* Current page: small page number tucked into the bottom-right corner. */
+    .bsf-lb-pageref {
+        position:absolute; right:-10px; bottom:-22px; z-index:3; text-align:right; line-height:1.25;
+    }
+    .bsf-lb-page-cap { display:block; font-family:'EB Garamond', Georgia, serif; font-style:italic; color:#8a7c62; font-size:10px; text-transform:uppercase; letter-spacing:.08em; }
+    .bsf-lb-pagenum  { display:block; font-family:'Playfair Display', Georgia, serif; color:#2c2620; font-size:17px; font-weight:700; }
     .bsf-lb-close {
-        position:absolute; top:14px; right:18px;
+        position:absolute; top:14px; right:18px; z-index:4;
         background:none; border:none; color:#6b5d45;
         font-size:26px; line-height:1; padding:4px 8px; cursor:pointer;
     }
@@ -268,7 +272,7 @@ function buildBookshelfHTML() {
         .bsf-lb-card { flex-direction:column; align-items:center; gap:18px; text-align:center; }
         .bsf-lb-card::before { display:none; }
         .bsf-lb-page { flex:0 0 auto; justify-content:center; padding:0; }
-        .bsf-lb-stats { justify-content:center; }
+        .bsf-lb-watch, .bsf-lb-pageref { position:static; text-align:center; margin-top:10px; }
     }
 </style>
 
@@ -279,28 +283,21 @@ function buildBookshelfHTML() {
     <div class="bsf-lightbox" id="bsf-lightbox" onclick="if(event.target===this)closeBookLightbox()">
         <div class="bsf-lb-card">
             <button class="bsf-lb-close" title="Close" onclick="closeBookLightbox()">&times;</button>
-            <h3 class="bsf-lb-title"></h3>
-            <div class="bsf-lb-body">
-                <div class="bsf-lb-page bsf-lb-page-left">
-                    <img class="bsf-lb-cover" src="" alt="">
+            <div class="bsf-lb-page bsf-lb-page-left">
+                <img class="bsf-lb-cover" src="" alt="">
+            </div>
+            <div class="bsf-lb-page bsf-lb-page-right">
+                <div class="bsf-lb-info">
+                    <h3 class="bsf-lb-title"></h3>
+                    <p class="bsf-lb-author"></p>
                 </div>
-                <div class="bsf-lb-page bsf-lb-page-right">
-                    <div class="bsf-lb-info">
-                        <p class="bsf-lb-author"></p>
-                        <div class="bsf-lb-meta">
-                            <span class="bsf-lb-status"></span>
-                            <div class="bsf-lb-stats">
-                                <div class="bsf-lb-stat bsf-lb-page-stat">
-                                    <span class="bsf-lb-stat-num bsf-lb-pagenum"></span>
-                                    <span class="bsf-lb-stat-label">current page</span>
-                                </div>
-                                <div class="bsf-lb-stat">
-                                    <span class="bsf-lb-stat-num bsf-lb-hours"></span>
-                                    <span class="bsf-lb-stat-label">hours read</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bsf-lb-watch" id="bsf-lb-watch">
+                    <i class="fas fa-stopwatch"></i>
+                    <span><span class="bsf-lb-hours"></span> hrs read</span>
+                </div>
+                <div class="bsf-lb-pageref" id="bsf-lb-pageref">
+                    <span class="bsf-lb-page-cap">current page</span>
+                    <span class="bsf-lb-pagenum"></span>
                 </div>
             </div>
         </div>
@@ -345,48 +342,21 @@ function openBookLightbox(el) {
     lb.classList.add('show');
 }
 
-const BOOKSHELF_STATUS_META = {
-    'in progress': { cls: 'st-progress', label: 'Currently reading' },
-    'pause':       { cls: 'st-pause',    label: 'Paused' },
-    'paused':      { cls: 'st-pause',    label: 'Paused' },
-    'idle':        { cls: 'st-idle',     label: 'Not started' },
-    'complete':    { cls: 'st-complete', label: 'Completed' },
-    'completed':   { cls: 'st-complete', label: 'Completed' }
-};
-
 function populateReadingMeta(lb, title) {
-    const meta = lb.querySelector('.bsf-lb-meta');
+    // Fields are hidden when empty (rather than padded with placeholders),
+    // leaving room for future notes about the book. Hours read shows on the
+    // stopwatch outside the book; current page stays inside.
     const entry = BOOKSHELF_READING_LOG && BOOKSHELF_READING_LOG[title.toLowerCase()];
-    const statusKey = entry ? (entry.status || '').toLowerCase() : '';
 
-    // "Not started" / Idle books show no stats — same as a cover with no entry.
-    if (!entry || statusKey === 'idle' || statusKey === 'not started') {
-        meta.classList.remove('show');
-        return;
-    }
+    const hasPage = entry && !isNaN(entry.page);
+    const pageref = lb.querySelector('#bsf-lb-pageref');
+    lb.querySelector('.bsf-lb-pagenum').textContent = hasPage ? entry.page : '';
+    if (pageref) pageref.style.display = hasPage ? '' : 'none';
 
-    const statusEl = lb.querySelector('.bsf-lb-status');
-    const info = BOOKSHELF_STATUS_META[statusKey];
-    if (info) {
-        statusEl.textContent = info.label;
-        statusEl.className = `bsf-lb-status ${info.cls}`;
-        statusEl.style.display = '';
-    } else {
-        statusEl.style.display = 'none';
-    }
-
-    const hours = isNaN(entry.hours) ? '—' : Number(entry.hours.toFixed(1));
-    lb.querySelector('.bsf-lb-hours').textContent = hours;
-
-    const pageStat = lb.querySelector('.bsf-lb-page-stat');
-    if (!isNaN(entry.page)) {
-        lb.querySelector('.bsf-lb-pagenum').textContent = entry.page;
-        pageStat.style.display = '';
-    } else {
-        pageStat.style.display = 'none';
-    }
-
-    meta.classList.add('show');
+    const hasHours = entry && !isNaN(entry.hours) && entry.hours > 0;
+    const watch = lb.querySelector('#bsf-lb-watch');
+    lb.querySelector('.bsf-lb-hours').textContent = hasHours ? Number(entry.hours.toFixed(1)) : '';
+    if (watch) watch.style.display = hasHours ? 'inline-flex' : 'none';
 }
 
 function closeBookLightbox() {
