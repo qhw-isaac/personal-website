@@ -443,7 +443,7 @@ body {
    ================================================
    These styles are for code editor tabs with line numbers.
    Currently not in use but retained for future features.
-   See workspace switching functionality in rstudio-script.js
+   See workspace switching functionality in dashboard-script.js
    ================================================ */
 
 .line-numbers {

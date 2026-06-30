@@ -387,6 +387,10 @@ section {
     box-shadow: none;
 }
 
+.status-badge-lg {
+    font-size: 0.98rem;
+}
+
 /* Research Interests Section */
 .research-interests h3 {
     text-align: center;
