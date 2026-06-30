@@ -20,7 +20,7 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="#" class="active">Projects</a></li>
-                    <li><a href="content/CV/Redacted_CV.pdf" target="_blank">CV</a></li>
+                    <li><a href="content/CV/academic_cv.pdf" target="_blank">CV</a></li>
                     <li><a href="dashboard.html" class="dashboard-link">Research Dashboard</a></li>
                 </ul>
             </nav>
@@ -34,6 +34,13 @@
                                margin: 0 0.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;
                                font-family: 'EB Garamond', 'Crimson Text', Georgia, serif; font-size: 1.1rem;">
                     Academic Projects
+                </button>
+                <button class="toggle-btn" id="teaching-btn" onclick="showProjects('teaching')"
+                        style="background: #f4f1e8; color: #4a4a4a; border: 1px solid #d4c4a0; 
+                               padding: 1rem 2rem; margin: 0 0.5rem; border-radius: 8px; 
+                               cursor: pointer; font-weight: 600;
+                               font-family: 'EB Garamond', 'Crimson Text', Georgia, serif; font-size: 1.1rem;">
+                    Teaching &amp; Pedagogy
                 </button>
                 <button class="toggle-btn" id="leadership-btn" onclick="showProjects('leadership')" 
                         style="background: #f4f1e8; color: #4a4a4a; border: 1px solid #d4c4a0; 
@@ -586,11 +593,11 @@
 
             </section>
 
-            <!-- Leadership & Service Section -->
-            <section class="recent-updates" id="leadership-projects" style="display: none;">
-                <h3>Leadership & Service</h3>
+            <!-- Teaching & Pedagogy Section -->
+            <section class="recent-updates" id="teaching-projects" style="display: none;">
+                <h3>Teaching &amp; Pedagogy</h3>
                 <p style="color: #6d6d6d; font-style: italic; margin-bottom: 2rem; text-align: center; font-size: 1rem;">
-                    Leadership roles and community service experiences.
+                    Teaching practice, pedagogical training, and the scholarship of teaching and learning.
                 </p>
 
                 <!-- Teaching Assistantships -->
@@ -631,11 +638,12 @@
                         <div style="margin: 15px 0; color: #6d6d6d;">
                             <p><strong>Current & Upcoming Courses:</strong></p>
                             <ul style="margin: 8px 0; padding-left: 20px;">
-                                <li><strong>DSCI 532</strong> - Data Visualization II (Master of Data Science) - 2026</li>
-                                <li><strong>LFS 101</strong> - Principles of Microeconomics with Applications to Land and Food Systems - 2026</li>
+                                <li><strong>APBI 398</strong> - Research Methods in Applied Biology - 2026</li>
                             </ul>
                             <p><strong>Previous Experience:</strong></p>
                             <ul style="margin: 8px 0; padding-left: 20px;">
+                                <li><strong>LFS 101</strong> - Principles of Microeconomics with Applications to Land and Food Systems - 2026</li>
+                                <li><strong>DSCI 532</strong> - Data Visualization II (Master of Data Science) - 2026</li>
                                 <li><strong>FNH 415</strong> - Business Concepts in Food, Nutrition, and Health - 2025</li>
                                 <li><strong>APBI 398</strong> - Research Methods in Applied Biology (Research Mentor) - 2024</li>
                                 <li><strong>ML & AI Workshop</strong> - Vancouver Independent School for Science and Technology - 2024</li>
@@ -644,6 +652,64 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- CTLT Graduate Facilitator -->
+                <div class="update-entry">
+                    <div class="update-content" style="background: #f9f7f4; border: 1px solid #e8e0d0; border-radius: 8px;
+                                                     padding: 24px; margin-left: 20px; position: relative;
+                                                     box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                        <!-- Tape on all four corners -->
+                        <div style="position: absolute; top: -8px; left: -8px; z-index: 10; transform: rotate(-11deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9);
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; top: -8px; right: -8px; z-index: 10; transform: rotate(15deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9);
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; left: -8px; z-index: 10; transform: rotate(8deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9);
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <div style="position: absolute; bottom: -8px; right: -8px; z-index: 10; transform: rotate(-13deg);">
+                            <div style="width: 40px; height: 16px; background: rgba(240, 230, 190, 0.9);
+                                       border: 1px solid rgba(200, 190, 160, 0.7); border-radius: 2px;
+                                       box-shadow: 0 2px 4px rgba(0,0,0,0.15);"></div>
+                        </div>
+                        <!-- UBC Crest Icon -->
+                        <div style="position: absolute; top: 24px; right: 24px; z-index: 15; background: white; border-radius: 4px; padding: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;">
+                            <img src="projects-content/ubc-crest-logo.png" alt="UBC" style="width: 24px; height: 24px; object-fit: contain;" />
+                        </div>
+                        <h4 style="margin-bottom: 4px;">Graduate Facilitator</h4>
+                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px;
+                                   font-style: italic;">Centre for Teaching, Learning and Technology (CTLT), UBC - 2026 - Present</div>
+                        <p>Facilitating pedagogical development workshops for graduate students across the university, supporting the growth of effective and reflective teaching practices.</p>
+                    </div>
+                </div>
+
+                <!-- Scholarship of Teaching & Learning (upcoming) -->
+                <div class="update-entry">
+                    <div class="update-content" style="background: #f9f7f4; border: 1px dashed #d4c4a0; border-radius: 8px;
+                                                     padding: 24px; margin-left: 20px; position: relative;
+                                                     box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                        <h4 style="margin-bottom: 4px;">Scholarship of Teaching &amp; Learning</h4>
+                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px;
+                                   font-style: italic;">In development</div>
+                        <p>Building on facilitator training through CTLT and the CIRTL network, I am developing SoTL projects that study and refine evidence-based teaching practices in quantitative and applied-science courses.</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Leadership & Service Section -->
+            <section class="recent-updates" id="leadership-projects" style="display: none;">
+                <h3>Leadership & Service</h3>
+                <p style="color: #6d6d6d; font-style: italic; margin-bottom: 2rem; text-align: center; font-size: 1rem;">
+                    Leadership roles and community service experiences.
+                </p>
 
                 <!-- Mensa Canada -->
                 <div class="update-entry">
@@ -713,9 +779,17 @@
                             <img src="projects-content/ubc-crest-logo.png" alt="UBC" style="width: 24px; height: 24px; object-fit: contain;" />
                         </div>
                         <h4 style="margin-bottom: 4px;">UBC LFS Graduate Student Council</h4>
-                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px; 
-                                   font-style: italic;">Academic Events Coordinator & MFRE Program Representative - 2025 - Present</div>
-                        <p>Serving as Academic Events Coordinator and MFRE Program Representative on the Graduate Student Council for the Faculty of Land and Food Systems. Leading the organization of the LFS Graduate Conference, representing the interests of Master of Food and Resource Economics students, and facilitating communication between graduate students and faculty administration.</p>
+                        <div style="font-size: 13px; color: #6d6d6d; font-weight: 400; margin-bottom: 12px;
+                                   font-style: italic;">Faculty of Land and Food Systems, UBC - 2025 - Present</div>
+
+                        <div style="margin: 15px 0; color: #6d6d6d;">
+                            <p><strong>Treasurer & Applied Animal Biology Program Representative</strong> <span style="font-style: italic;">— 2026 - Present</span></p>
+                            <p style="margin-top: 12px;"><strong>Academic Events Coordinator & MFRE Program Representative</strong> <span style="font-style: italic;">— 2025 - 2026</span></p>
+                            <ul style="margin: 8px 0; padding-left: 20px;">
+                                <li>Led the organization of the LFS Graduate Student Conference, coordinating sponsorships, logistics, and academic teams.</li>
+                                <li>Secured 12 sponsors totalling $2,000 in funding; supported 100 attendees and 50 presenters.</li>
+                            </ul>
+                        </div>
                         
                         <!-- UBC GSC Profile Link -->
                         <div style="margin: 15px 0;">
@@ -1075,16 +1149,19 @@
             const passionSection = document.getElementById('passion-projects');
             const academicSection = document.getElementById('academic-projects');
             const leadershipSection = document.getElementById('leadership-projects');
+            const teachingSection = document.getElementById('teaching-projects');
             
             // Get buttons
             const passionBtn = document.getElementById('passion-btn');
             const academicBtn = document.getElementById('academic-btn');
             const leadershipBtn = document.getElementById('leadership-btn');
+            const teachingBtn = document.getElementById('teaching-btn');
             
             // Hide all sections first
             passionSection.style.display = 'none';
             academicSection.style.display = 'none';
             leadershipSection.style.display = 'none';
+            teachingSection.style.display = 'none';
             
             // Reset all buttons to inactive state
             const inactiveStyle = {
@@ -1108,11 +1185,15 @@
             // Apply inactive style to all buttons
             Object.assign(academicBtn.style, inactiveStyle);
             Object.assign(leadershipBtn.style, inactiveStyle);
+            Object.assign(teachingBtn.style, inactiveStyle);
             Object.assign(passionBtn.style, inactiveStyle);
             
             if (type === 'academic') {
                 academicSection.style.display = 'block';
                 Object.assign(academicBtn.style, activeStyle);
+            } else if (type === 'teaching') {
+                teachingSection.style.display = 'block';
+                Object.assign(teachingBtn.style, activeStyle);
             } else if (type === 'leadership') {
                 leadershipSection.style.display = 'block';
                 Object.assign(leadershipBtn.style, activeStyle);

@@ -253,7 +253,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Built with modern web technologies and academic design principles.
     
     Explore the interactive research dashboard: dashboard.html
-    Read my academic journal: journal.html
     View my past projects: projects.html
     `);
 });

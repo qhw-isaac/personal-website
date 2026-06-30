@@ -453,6 +453,133 @@ section {
     margin-bottom: 0;
 }
 
+/* Awards & Honours */
+.awards h3 {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    color: var(--oxford-blue);
+    position: relative;
+}
+
+.awards h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--gold-leaf);
+}
+
+.award-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    background: linear-gradient(135deg, var(--oxford-blue) 0%, var(--midnight-navy) 100%);
+    color: var(--text-light);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-heavy);
+    border-left: 4px solid var(--gold-leaf);
+    margin-bottom: var(--space-lg);
+}
+
+.award-feature-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--gold-leaf);
+    border: 1px solid var(--gold-leaf);
+    border-radius: var(--border-radius);
+    padding: 0.25rem 0.6rem;
+    flex-shrink: 0;
+}
+
+.award-feature-body {
+    flex: 1;
+}
+
+.award-feature-body h4 {
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+}
+
+.award-feature-body p {
+    color: var(--old-paper);
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+.award-feature-amount {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--gold-leaf);
+    flex-shrink: 0;
+}
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-lg);
+}
+
+.award-card {
+    background: white;
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    border-top: 3px solid var(--gold-leaf);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.award-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.award-year {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--burnt-amber);
+    margin-bottom: var(--space-xs);
+}
+
+.award-card h4 {
+    color: var(--oxford-blue);
+    margin-bottom: var(--space-xs);
+    font-size: 1.15rem;
+}
+
+.award-card p {
+    color: var(--text-muted);
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+.award-amount {
+    margin-top: var(--space-sm);
+    font-weight: 600;
+    color: var(--deep-forest);
+}
+
+@media (max-width: 768px) {
+    .award-feature {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-sm);
+        padding: var(--space-lg);
+    }
+
+    .awards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Footer */
 .site-footer {
     background: var(--oxford-blue);
@@ -768,6 +895,26 @@ section {
     font-style: italic;
     margin-top: var(--space-md);
     opacity: 0.8;
+}
+
+/* Mastery Epigraph */
+.mastery-epigraph {
+    text-align: center;
+    max-width: 620px;
+    margin: var(--space-lg) auto 0;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.mastery-epigraph .epigraph-attribution {
+    display: block;
+    margin-top: var(--space-xs);
+    font-style: normal;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
 }
 
 /* Smooth scrolling */

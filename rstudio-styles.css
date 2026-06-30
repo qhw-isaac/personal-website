@@ -277,7 +277,7 @@ body {
 .panes-container {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 420px; /* Fixed right column width for 6 thermometers */
+    grid-template-columns: 1fr 460px; /* Fixed right column width for 6 thermometers */
     gap: 1px;
     background: #3e3e42;
     min-height: 0;
@@ -292,13 +292,13 @@ body {
 
 .right-column {
     min-width: 320px; /* Ensures right column can fit 6 thermometers */
-    max-width: 420px; /* Prevents right column from getting too wide */
+    max-width: 460px; /* Prevents right column from getting too wide */
 }
 
 /* Left column container - 60% top (source), 40% bottom (console) */
 .left-column {
     display: grid;
-    grid-template-rows: 3fr 2fr; /* 60% / 40% split */
+    grid-template-rows: 13fr 7fr; /* 65% / 35% split */
     gap: 1px;
     position: relative;
     min-width: 0;
@@ -310,7 +310,7 @@ body {
 /* Right column container - 25% top (environment), 75% bottom (plots) */
 .right-column {
     display: grid;
-    grid-template-rows: 1fr 3fr; /* 25% / 75% split */
+    grid-template-rows: 3fr 7fr; /* 30% / 70% split */
     gap: 1px; /* Fixed: negative gap was causing layout issues */
     position: relative;
     min-width: 0;
@@ -544,7 +544,7 @@ body {
 
 /* Environment Pane */
 .environment-pane {
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 1;
 }
 
@@ -688,12 +688,11 @@ body {
 .cow-display {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 24px;
     flex: 1;
-    max-width: 800px;
+    max-width: 760px;
     width: 100%;
-    height: 100%;
 }
 
 .cow-image-container {
@@ -708,8 +707,6 @@ body {
     justify-content: center;
     position: relative;
     flex-shrink: 0;
-    align-self: center;
-    margin-top: 10px;
 }
 
 .cow-image {
@@ -729,9 +726,7 @@ body {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-self: center;
-    margin-top: 15px;
+    justify-content: flex-start;
 }
 
 .cow-info h4 {
@@ -779,10 +774,6 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    align-self: center;
-    margin-left: 10px;
-    max-height: 80%;
-    margin-top: 10px;
 }
 
 .story-label {
@@ -1034,7 +1025,7 @@ body {
 
 /* Plots Pane */
 .plots-pane {
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 2;
     margin-top: 3px; /* Just a tiny bit lower */
 }

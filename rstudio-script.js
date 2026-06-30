@@ -44,7 +44,7 @@ Every study, every analysis, every day spent in the field is guided by this
 simple goal: improving the welfare and quality of life for dairy cattle.`,
     'field_of_study': `chr "Master of Food and Resource Economics at the University of British Columbia"`,
     'current_status': `chr "At the first Vancouver community Cursor Workshop!"`,
-    'cv': 'content/CV/Redacted_CV.pdf', // Special case: opens PDF in new tab
+    'cv': 'content/CV/academic_cv.pdf', // Special case: opens PDF in new tab
     'Animal Welfare': `Switching to Animal Welfare...`,
     'Economics': `Switching to Economics...`
 };
@@ -1377,8 +1377,7 @@ function setupPlotsTabSwitching() {
         'this-week': document.getElementById('this-week-content'),
         'lifetime': document.getElementById('lifetime-content'),
         'mfre': document.getElementById('mfre-content'),
-        'MFRE': document.getElementById('mfre-content'),
-        'plots': document.getElementById('plots-content')
+        'MFRE': document.getElementById('mfre-content')
     };
     
     plotsTabs.forEach(tab => {
@@ -1398,12 +1397,6 @@ function setupPlotsTabSwitching() {
                     contentPanes[key].style.display = (key === tabId) ? 'flex' : 'none';
                 }
             });
-            
-            // Lazy-load chart on first Plots tab click
-            if (tabId === 'plots' && !chartInitialized) {
-                chartInitialized = true;
-                initializeChart();
-            }
             
             // Initialize lifetime tracker on Lifetime tab click
             if (tabId === 'lifetime') {
