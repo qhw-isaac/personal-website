@@ -46,7 +46,8 @@ simple goal: improving the welfare and quality of life for dairy cattle.`,
     'current_status': `chr "At the first Vancouver community Cursor Workshop!"`,
     'cv': 'content/CV/academic_cv.pdf', // Special case: opens PDF in new tab
     'Animal Welfare': `Switching to Animal Welfare...`,
-    'Economics': `Switching to Economics...`
+    'Economics': `Switching to Economics...`,
+    'Bookshelf': `Switching to Bookshelf...`
 };
 
 // 📞 Contact Information
@@ -139,26 +140,25 @@ function setupEnvironmentTabs() {
 // Click to collapse the right column to a thin rail,
 // click the rail to bring it back.
 // ================================================
-function setupRightColumnToggle() {
+function setRightColumnCollapsed(collapsed) {
     const panes = document.getElementById('panes-container');
+    if (panes) panes.classList.toggle('right-collapsed', collapsed);
+}
+
+function setupRightColumnToggle() {
     const collapseBtn = document.getElementById('collapse-panel-btn');
     const expandBtn = document.getElementById('expand-panel-btn');
-    if (!panes) return;
-
-    const setCollapsed = (collapsed) => {
-        panes.classList.toggle('right-collapsed', collapsed);
-    };
 
     if (collapseBtn) {
         collapseBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            setCollapsed(true);
+            setRightColumnCollapsed(true);
         });
     }
     if (expandBtn) {
         expandBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            setCollapsed(false);
+            setRightColumnCollapsed(false);
         });
     }
 }
@@ -227,9 +227,15 @@ function setupEnvCategoryClicks() {
             switch(key) {
                 case 'animal-welfare':
                     switchLeftWorkspace('default');
+                    setRightColumnCollapsed(false);
                     break;
                 case 'economics':
                     switchLeftWorkspace('economics');
+                    setRightColumnCollapsed(false);
+                    break;
+                case 'bookshelf':
+                    switchLeftWorkspace('bookshelf');
+                    setRightColumnCollapsed(true);
                     break;
             }
         });
@@ -267,7 +273,8 @@ function switchLeftWorkspace(mode) {
 
 function getWorkspaceHTML(mode) {
     const workspaceMap = {
-        'economics': ECONOMICS_WORKSPACE
+        'economics': ECONOMICS_WORKSPACE,
+        'bookshelf': BOOKSHELF_WORKSPACE
     };
     
     const config = workspaceMap[mode];
