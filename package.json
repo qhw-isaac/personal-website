@@ -4,7 +4,8 @@
   "description": "Isaac Qi's personal website with time tracking dashboard",
   "main": "index.html",
   "scripts": {
-    "update": "node update-tracker-data.js"
+    "update-time": "node update-time.js",
+    "update-book": "node update-book.js"
   },
   "keywords": [
     "academic",

@@ -203,7 +203,7 @@ function updateLandingPageParameters(data) {
     );
     
     fs.writeFileSync(landingPath, content);
-    console.log('✅ Updated landing page horizontal bar with latest hours');
+    console.log('✅ Updated landing page with latest hours');
 }
 
 // Update this-week-data.js

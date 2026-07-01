@@ -6,12 +6,12 @@
 
 const LIFETIME_TRACKER_CONFIG = {
     beginDate: "January 1, 2025",
-    lastUpdated: "Jun 29, 2026",
+    lastUpdated: "Jun 30, 2026",
     maxHours: 1600, // Maximum hours for tallest bar (round up from actual max)
     activities: [
         { 
             name: "Economics", 
-            hours: 1568.93, 
+            hours: 1569.57, 
             color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
         },
         { 
@@ -21,7 +21,7 @@ const LIFETIME_TRACKER_CONFIG = {
         },
         { 
             name: "Pedagogy", 
-            hours: 412.65, 
+            hours: 414.65, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 

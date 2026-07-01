@@ -11,17 +11,17 @@
 
 const TIME_TRACKER_CONFIG = {
     weekOf: "Jun 29 - 5, 2026",
-    lastUpdated: "11:51 PM, Jun 29, 2026",
+    lastUpdated: "7:03 PM, Jun 30, 2026",
     maxHours: 7, // Maximum hours for tallest bar (round up from actual max)
     activities: [
         { 
             name: "Economics", 
-            hours: 6.02, 
+            hours: 6.65, 
             color: "#c99a4d" // Bright amber/old gold - wealth, old money, leather-bound ledgers
         },
         { 
             name: "Pedagogy", 
-            hours: 1.42, 
+            hours: 3.42, 
             color: "#8ba68c" // Soft sage - chalkboards, teaching halls, worn textbooks
         },
         { 
