@@ -803,7 +803,7 @@ section {
 .study-summary-container {
     display: flex;
     justify-content: center;
-    margin: var(--space-xl) 0;
+    margin: var(--space-xl) 0 var(--space-sm) 0;
     width: 100%;
     box-sizing: border-box;
 }
@@ -897,7 +897,7 @@ section {
     font-size: 0.85rem;
     color: var(--text-muted);
     font-style: italic;
-    margin-top: var(--space-md);
+    margin-top: 0;
     opacity: 0.8;
 }
 
