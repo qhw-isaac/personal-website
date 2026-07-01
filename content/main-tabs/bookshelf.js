@@ -8,26 +8,15 @@
 // Covers live in content/books/ (filename = title).
 // ================================================
 
-const BOOKSHELF_BOOKS = [
-    { file: "Nicomachean Ethics.jpg",                                            author: "Aristotle" },
-    { file: "The Philosophy of Kant.jpg",                                        author: "Immanuel Kant" },
-    { file: "Economic Philosophy.jpg",                                           author: "Joan Robinson" },
-    { file: "The Theory of Incentives.jpg",                                      author: "Laffont & Martimort" },
-    { file: "The Handbook of Experimental Economics.jpg",                        author: "Kagel & Roth" },
-    { file: "A Life of Experimental Economics - Volume II - The Next Fifty Years.webp", author: "Vernon L. Smith" },
-    { file: "The Universal Book of Mathematics.jpg",                             author: "David Darling" },
-    { file: "The Data Detective.jpg",                                            author: "Tim Harford" },
-    { file: "The Pattern Seekers.png",                                           author: "Simon Baron-Cohen" },
-    { file: "Hidden Potential.jpg",                                              author: "Adam Grant" },
-    { file: "Rich Dad Poor Dad.jpg",                                             author: "Robert Kiyosaki" },
-    { file: "Animal Welfare.png",                                                author: "" },
-    { file: "The Humane Economy.jpg",                                            author: "Wayne Pacelle" },
-    { file: "Animal Farm.jpg",                                                   author: "George Orwell" },
-    { file: "The Hen Who Dreamed She Could Fly.jpg",                             author: "Sun-mi Hwang" },
-    { file: "Fifteen Dogs.jpg",                                                  author: "André Alexis" },
-    { file: "The Murder of Roger Ackroyd.jpg",                                   author: "Agatha Christie" },
-    { file: "On Earth We're Briefly Gorgeous.jpg",                               author: "Ocean Vuong" }
-];
+// The shelf is driven entirely by the reading log (content/books/reading-log.csv
+// → reading-log.js). Add/remove a row there and run `node update-book.js` to
+// add/remove a book here — no code changes needed.
+function getBookshelfBooks() {
+    if (typeof BOOKSHELF_READING_LOG_DATA === 'undefined') return [];
+    return BOOKSHELF_READING_LOG_DATA
+        .filter(b => b && b.file)
+        .map(b => ({ file: b.file, title: b.title, author: b.author || '' }));
+}
 
 // Stable per-title variation so the shelf looks like real books
 // of differing heights and thicknesses (no randomness on reload).
@@ -38,7 +27,7 @@ function bookshelfHash(str) {
 }
 
 // Reading log lives in a CSV the user can edit:
-//   content/books/reading-log.csv  →  title,status,hours,page
+//   content/books/reading-log.csv  →  title,author,status,hours,page
 // content/books/reading-log.js mirrors it as a JS array (regenerated from the
 // CSV by the tracker updater) so the stats also work over file://, where
 // fetch() is blocked. We prefer the JS data and fall back to fetching the CSV.
@@ -66,14 +55,16 @@ function parseReadingLogCSV(text) {
     lines.shift(); // header
     lines.forEach(line => {
         if (!line.trim()) return;
-        // Parse from the right so a title containing commas stays intact.
+        // Columns: title,author,status,hours,page. Parse the fixed trailing
+        // fields from the right so a leading title/author is left intact.
         const parts = line.split(',');
-        if (parts.length < 4) return;
+        if (parts.length < 5) return;
         const page = parts.pop().trim();
         const hours = parts.pop().trim();
         const status = parts.pop().trim();
+        const author = parts.pop().trim();
         const title = parts.join(',').trim().replace(/^"|"$/g, '');
-        entries.push({ title, status, hours, page });
+        entries.push({ title, author, status, hours, page });
     });
     return entries;
 }
@@ -96,8 +87,8 @@ function loadReadingLog() {
 
 function buildBookshelfHTML() {
     loadReadingLog();
-    const spines = BOOKSHELF_BOOKS.map((book, i) => {
-        const title = book.file.replace(/\.[^.]+$/, '');
+    const spines = getBookshelfBooks().map((book, i) => {
+        const title = book.title || book.file.replace(/\.[^.]+$/, '');
         const src = `content/books/${book.file}`;
         const h = bookshelfHash(title);
         const height = 210 + (h % 5) * 10;        // 210–250px
@@ -235,11 +226,21 @@ function buildBookshelfHTML() {
     .bsf-lb-page { flex:1 1 0; display:flex; align-items:center; min-width:0; }
     .bsf-lb-page-left  { justify-content:flex-end; padding-right:34px; }
     .bsf-lb-page-right { position:relative; align-items:flex-start; padding-left:34px; padding-top:6px; }
+    .bsf-lb-cover-wrap { position:relative; flex:0 0 auto; z-index:1; }
     .bsf-lb-cover {
-        flex:0 0 auto; width:300px; height:456px; object-fit:cover;
+        display:block; width:300px; height:456px; object-fit:cover;
         border-radius:2px;
         box-shadow:0 14px 30px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.45);
     }
+    /* Rubber "Completed" stamp — bottom-right of the right page. */
+    .bsf-lb-stamp {
+        display:none;
+        position:absolute; right:-16px; bottom:-24px; z-index:4;
+        width:112px; height:auto;
+        transform:rotate(-8deg);
+        pointer-events:none;
+    }
+    .bsf-lb-stamp.show { display:block; }
     .bsf-lb-info { flex:1 1 auto; min-width:0; }
     /* Title sits at the top of the right page */
     .bsf-lb-title {
@@ -272,7 +273,9 @@ function buildBookshelfHTML() {
         .bsf-lb-card { flex-direction:column; align-items:center; gap:18px; text-align:center; }
         .bsf-lb-card::before { display:none; }
         .bsf-lb-page { flex:0 0 auto; justify-content:center; padding:0; }
-        .bsf-lb-watch, .bsf-lb-pageref { position:static; text-align:center; margin-top:10px; }
+        .bsf-lb-watch, .bsf-lb-pageref, .bsf-lb-stamp { position:static; text-align:center; margin-top:10px; }
+        .bsf-lb-stamp { display:none; width:96px; margin:10px auto 0; transform:none; }
+        .bsf-lb-stamp.show { display:block; }
     }
 </style>
 
@@ -284,13 +287,16 @@ function buildBookshelfHTML() {
         <div class="bsf-lb-card">
             <button class="bsf-lb-close" title="Close" onclick="closeBookLightbox()">&times;</button>
             <div class="bsf-lb-page bsf-lb-page-left">
-                <img class="bsf-lb-cover" src="" alt="">
+                <div class="bsf-lb-cover-wrap">
+                    <img class="bsf-lb-cover" src="" alt="">
+                </div>
             </div>
             <div class="bsf-lb-page bsf-lb-page-right">
                 <div class="bsf-lb-info">
                     <h3 class="bsf-lb-title"></h3>
                     <p class="bsf-lb-author"></p>
                 </div>
+                <img class="bsf-lb-stamp" src="content/books/completed_stamp.png" alt="Completed">
                 <div class="bsf-lb-watch" id="bsf-lb-watch">
                     <i class="fas fa-stopwatch"></i>
                     <span><span class="bsf-lb-hours"></span> hrs read</span>
@@ -319,6 +325,7 @@ function toggleBook(el) {
 }
 
 function openBookLightbox(el) {
+    loadReadingLog();
     const lb = document.getElementById('bsf-lightbox');
     if (!lb) return;
 
@@ -347,6 +354,10 @@ function populateReadingMeta(lb, title) {
     // leaving room for future notes about the book. Hours read shows on the
     // stopwatch outside the book; current page stays inside.
     const entry = BOOKSHELF_READING_LOG && BOOKSHELF_READING_LOG[title.toLowerCase()];
+
+    const isComplete = entry && /^(complete|completed)$/i.test((entry.status || '').trim());
+    const stamp = lb.querySelector('.bsf-lb-stamp');
+    if (stamp) stamp.classList.toggle('show', !!isComplete);
 
     const hasPage = entry && !isNaN(entry.page);
     const pageref = lb.querySelector('#bsf-lb-pageref');

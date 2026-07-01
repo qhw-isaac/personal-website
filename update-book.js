@@ -3,15 +3,54 @@
 // 📚 BOOK LOG DATA UPDATER
 // ================================================
 // Reads content/books/reading-log.csv and regenerates
-// content/books/reading-log.js (the <script> mirror the
-// bookshelf uses so stats work over file:// too).
+// content/books/reading-log.js (the <script> the bookshelf
+// uses for BOTH the list of books it shows and their stats,
+// so it works over file:// too).
+//
+// The CSV is the single source of truth: add a row to add a
+// book to the shelf, delete a row to remove it. The cover
+// image is matched automatically from content/books/ by title.
 // ================================================
 
 const fs = require('fs');
 const path = require('path');
 
-const csvPath = path.join(__dirname, 'content', 'books', 'reading-log.csv');
-const jsPath = path.join(__dirname, 'content', 'books', 'reading-log.js');
+const booksDir = path.join(__dirname, 'content', 'books');
+const csvPath = path.join(booksDir, 'reading-log.csv');
+const jsPath = path.join(booksDir, 'reading-log.js');
+
+// Parse a single CSV line, honouring "quoted, fields".
+function parseCSVLine(line) {
+    const out = [];
+    let field = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+        if (inQuotes) {
+            if (c === '"') {
+                if (line[i + 1] === '"') { field += '"'; i++; }
+                else inQuotes = false;
+            } else field += c;
+        } else if (c === '"') {
+            inQuotes = true;
+        } else if (c === ',') {
+            out.push(field); field = '';
+        } else field += c;
+    }
+    out.push(field);
+    return out.map(s => s.trim());
+}
+
+// Build a lookup of cover files by title (filename without extension).
+function coverFilesByTitle() {
+    const map = {};
+    for (const f of fs.readdirSync(booksDir)) {
+        if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(f)) continue;
+        const base = f.replace(/\.[^.]+$/, '');
+        map[base.toLowerCase()] = f;
+    }
+    return map;
+}
 
 function main() {
     if (!fs.existsSync(csvPath)) {
@@ -19,53 +58,61 @@ function main() {
         process.exit(1);
     }
 
-    const lines = fs.readFileSync(csvPath, 'utf-8').trim().split('\n');
+    const covers = coverFilesByTitle();
+    const lines = fs.readFileSync(csvPath, 'utf-8').trim().split(/\r?\n/);
     const rows = [];
+    const missing = [];
 
-    // Skip the header row (title,status,hours,page)
+    // Skip the header row (title,author,status,hours,page)
     for (let i = 1; i < lines.length; i++) {
         const line = lines[i].trim();
         if (!line || line.startsWith('#')) continue;
 
-        const parts = line.split(',');
-        if (parts.length < 4) continue;
+        const [title, author, status, hours, page] = parseCSVLine(line);
+        if (!title) continue;
 
-        // Title may (rarely) contain commas; the last 3 fields are fixed.
-        const page = parts.pop().trim();
-        const hours = parts.pop().trim();
-        const status = parts.pop().trim();
-        const title = parts.join(',').trim();
+        const file = covers[title.toLowerCase()];
+        if (!file) {
+            missing.push(title);
+            continue; // no cover → skip so we never render a broken spine
+        }
 
         rows.push({
             title,
-            status,
-            hours: hours === '' ? 0 : parseFloat(hours),
-            page: page === '' ? null : parseInt(page, 10)
+            author: author || '',
+            file,
+            status: status || '',
+            hours: hours === '' || hours === undefined ? 0 : parseFloat(hours),
+            page: page === '' || page === undefined ? null : parseInt(page, 10)
         });
     }
 
     if (rows.length === 0) {
-        console.error('❌ Error: No book rows found in reading-log.csv');
+        console.error('❌ Error: No books with matching covers found in reading-log.csv');
         process.exit(1);
     }
 
-    // Line up the columns so the generated file stays readable.
-    const titleWidth = Math.max(...rows.map(r => JSON.stringify(r.title).length));
-    const statusWidth = Math.max(...rows.map(r => JSON.stringify(r.status).length));
+    // Line up columns so the generated file stays readable.
+    const w = (key) => Math.max(...rows.map(r => JSON.stringify(r[key]).length));
+    const tw = w('title'), aw = w('author'), fw = w('file'), sw = w('status');
 
     const entries = rows.map(r => {
-        const title = JSON.stringify(r.title).padEnd(titleWidth);
-        const status = (JSON.stringify(r.status) + ',').padEnd(statusWidth + 1);
-        return `    { title: ${title}, status: ${status} hours: ${r.hours}, page: ${r.page === null ? 'null' : r.page} }`;
+        const title = (JSON.stringify(r.title) + ',').padEnd(tw + 1);
+        const author = (JSON.stringify(r.author) + ',').padEnd(aw + 1);
+        const file = (JSON.stringify(r.file) + ',').padEnd(fw + 1);
+        const status = (JSON.stringify(r.status) + ',').padEnd(sw + 1);
+        return `    { title: ${title} author: ${author} file: ${file} status: ${status} hours: ${r.hours}, page: ${r.page === null ? 'null' : r.page} }`;
     }).join(',\n');
 
     const content = `// ================================================
 // 📚 BOOKSHELF READING LOG DATA
 // ================================================
-// Mirror of content/books/reading-log.csv (title,status,hours,page).
-// Loaded via <script> so the shelf's stats work over file:// too.
+// Mirror of content/books/reading-log.csv (title,author,status,hours,page).
+// Loaded via <script> so the shelf + stats work over file:// too.
 // Auto-generated by update-book.js — edit the CSV, not this file.
-//   title  → must match the cover filename (without extension)
+//   title  → matches the cover filename (without extension)
+//   author → shown under the title
+//   file   → cover image (auto-matched from content/books/)
 //   status → In Progress | Pause | Idle | Complete
 //   hours  → total hours spent reading
 //   page   → current page (null if not started / finished / untracked)
@@ -78,6 +125,10 @@ ${entries}
 
     fs.writeFileSync(jsPath, content);
     console.log(`✅ Updated content/books/reading-log.js (${rows.length} books)`);
+    if (missing.length) {
+        console.log(`⚠️  Skipped ${missing.length} book(s) with no matching cover in content/books/:`);
+        missing.forEach(t => console.log(`    - "${t}"`));
+    }
 }
 
 main();
