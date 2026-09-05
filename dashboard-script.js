@@ -42,7 +42,7 @@ const OBJECT_DETAILS = {
 This represents my core motivation and the driving force behind my research. 
 Every study, every analysis, every day spent in the field is guided by this 
 simple goal: improving the welfare and quality of life for dairy cattle.`,
-    'field_of_study': `chr "Animal Welfare Program at the University of British Columbia (MFRE, 2026)"`,
+    'field_of_study': `chr "Animal Welfare Program at the University of British Columbia"`,
     'current_status': `chr "At the first Vancouver community Cursor Workshop!"`,
     'cv': 'content/CV/academic_cv.pdf', // Special case: opens PDF in new tab
     'Animal Welfare': `Switching to Animal Welfare...`,
