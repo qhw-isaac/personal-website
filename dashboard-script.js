@@ -930,6 +930,7 @@ function updateCowDisplay() {
     if (cow.image) {
         cowGalleryElements.cowImage.src = cow.image;
         cowGalleryElements.cowImage.alt = cow.name;
+        cowGalleryElements.cowImage.style.objectPosition = cow.imagePosition || "";
     }
 
     // Handle special "And Many More to Come!" page

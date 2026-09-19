@@ -2,6 +2,7 @@
 // 🐄 COW GALLERY DATA
 // ================================================
 // Each cow needs: name, breed, location, date, image, and story
+// Optional: imagePosition (CSS object-position) to shift the crop
 // ================================================
 
 const COW_DATA = [
@@ -36,6 +37,24 @@ const COW_DATA = [
         date: "July 19, 2025",
         image: "cow-gallery/images/Rocky.jpg",
         story: "Rocky was a 4H steer, particularly one showed by the son of the owner of K&M Farms. He was as gentle as can be; the owner mentioned that he is very unaware of his humongous size, and often make way for people that are walking by."
+    },
+    {
+        name: "Unknown",
+        breed: "Highland",
+        location: "Ruckle Heritage Farm, Salt Spring Island",
+        date: "August 29, 2025",
+        image: "cow-gallery/images/ruckle.JPG",
+        imagePosition: "center 70%", // vertical crop within the frame
+        story: "This fluffy highland was pasture (well, forest) raised at Ruckle Heritage Farm, which practices rotational grazing and is the only provincial park in Canada that is also a working farm. The farm is on Salt Spring Island and has the best hosts."
+    },
+    {
+        name: "Unknown",
+        breed: "Holstein x Wagyu (possibly)",
+        location: "EcoDairy",
+        date: "April 10, 2026",
+        image: "cow-gallery/images/ecodairy.JPG",
+        imagePosition: "center top", // vertical crop within the frame
+        story: "I met this cow at the EcoDairy in Abbotsford on the last day of my MFRE classes. It was lovely to see the cows before final exam season."
     }
 ];
 

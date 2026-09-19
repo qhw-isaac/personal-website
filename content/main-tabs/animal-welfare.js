@@ -7,7 +7,7 @@
 
 const ANIMAL_WELFARE_WORKSPACE = {
     title: "Animal Welfare Research",
-    description: "Exploring how positive reinforcement training influences dairy cattle welfare during automated milking system transitions.",
+    description: "Exploring how individual differences in training predict how well dairy cows adjust to automatic milking.",
     isDefault: true // This is the default workspace when page loads
 };
 
